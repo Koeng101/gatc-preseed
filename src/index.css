@@ -63,19 +63,13 @@ button:active {
 ::-webkit-scrollbar-thumb { background: black; border: 2px solid #f2f0e9; }
 ::-webkit-scrollbar-track { background: #f2f0e9; }
 
-/* The Simulator Frame (Retro Terminal) */
-.stripe-card {
-  background: #1a1a1a;
-  border: 2px solid #1a1a1a;
-  border-radius: 0px;
-  box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.2);
-  color: #00cc66; /* Green Screen Text */
+/* Pitch Deck Scroll Snap */
+.pitch-deck-container {
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Reset for Widgets inside the Terminal to look "Retro" or "Clean" */
-.widget-viewport {
-  background-color: #f8f8f8; /* Light gray paper inside terminal */
-  color: #1a1a1a;
-  font-family: var(--font-mono);
+.pitch-slide {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
-.widget-viewport h1, .widget-viewport h2 { color: #1a1a1a; font-family: var(--font-display); }

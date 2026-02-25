@@ -1,0 +1,442 @@
+Genetic Assemblies
+
+0. Summary
+
+Using the latest software tools and AI models, you've just designed an awesome
+new biological drug to treat Alzheimer's (or any other industrial/consumer
+biotech application, perhaps a longevity drug, or a new food ingredient). Now
+you have to actually test it in real life, because the algorithms sometimes mess
+up. How do you test your brand new idea?
+
+Right now, this involves working with an opaque chain of companies to produce
+material to test, and then you have to run it in your own lab. If you don't
+specialize in robotics (and as biologists, you shouldn't), you have to both
+equip this lab, costing ~$50k-$500k, and then you have to run it yourself, which
+usually takes an incredible amount of manual labor - nearly always requiring
+several new hires just to operate the lab.
+
+Alternatively, you could hire a contract research organization (CROs), which
+can do your experiments for you. Yet still - they run the experiments with
+fallible humans in a lab, and your communication is with other humans to plan
+and do the experiments. You have to pay for all that communication and
+specialized labor. And yet, even with these inefficiencies, the market for CROs
+is approximately $85B and expected to reach $125B by 2030 [4].
+
+What if, instead, we replaced all those manual-labor laboratories and humans
+writing emails with robots and software? Genetic Assemblies is solving the
+problem of building and operating labs by building a system that allows you to
+go from biological idea to biological data without ever stepping into a lab or
+talking to a human. You define the experiment, and with the help of an AI coding
+system it is translated to robot-friendly language and it is executed in our
+automated lab.
+
+The future is inevitably headed in this direction: AI systems from companies
+like OpenAI are able to make theories and plan experiments [1] but unable to
+run the actual experiments without outsourcing to humans in a lab [2]. We want
+to enable these systems - and more importantly the humans controlling them - to
+get actual biological results without resorting to purchasing in-house equipment
+and manually running experiments.
+
+Describe your experiment. Run it with us. Get back real data to inform your next
+round of experiments or train your model.
+
+
+
+1. Team
+
+Genetic Assemblies is solo-founded by Keoni Gandall. Keoni worked at UCI for 4
+years in Chang Liu's lab in directed evolution and mitochondrial engineering,
+and then worked for 3 years in Drew Endy's lab at Stanford, running the
+FreeGenes Project. Afterwards, he cofounded Trilobio, a company manufacturing
+fully-automated lab robots. However, simply making hardware was not his calling,
+so he founded Genetic Assemblies, with the goal of full automation as a service.
+At Trilobio, Keoni was in charge of building the software systems for fully
+automated labs.
+
+Ben Ray has joined as our first founding engineer. Ben led the automation team
+at Retro Biosciences, a large and successful longevity startup, for 3.5 years
+before leaving and joining Genetic Assemblies. At Retro, Ben was in charge of
+building and maintaining the hardware for fully automated robotic systems using
+used robots and clever engineering.
+
+We do not plan on hiring until we really need to. This will likely be either a
+software engineer or a lab technician; whichever we really need help with.
+Regardless, we encompass the software, hardware, and wetware skills necessary to
+build the first iteration of Genetic Assemblies.
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+						   Genetic Assemblies Vision
+
+
+0. First step
+
+While we want to automate experiments end-to-end, a segmented chunk of the
+vision has a clear and profitable value prop that we are executing on today
+which builds towards our ultimate goal.
+
+Right now, we are building synthetic DNA for customers. DNA encodes biological
+information that can be converted into biological actions, and so is the perfect
+place to start for our end-to-end biological foundry because it is, very often,
+the beginning of an experiment.
+
+Genetic Assemblies's core competency is logistics - including operation of
+machines, production or acquisition of necessary materials, or running
+experiments to streamline protocols - all backed by software, instead of humans.
+This is a stark contrast to current competitors who primarily compete with a
+specific technology, like enzymatic DNA synthesis or a few narrow optimized
+protocols. This informs how we enter and compete in markets.
+
+In synthetic DNA assembly, we have a very simple pipeline: we take DNA made from
+oligo pool providers and we assemble it with known protocols [5]. While
+conceptually simple, the devil is in the details:
+
+  1. How do you design the oligo pool for customer assemblies?
+  2. How much enzyme should you use? Which enzyme should you use?
+  3. How does DNA transformation work on a robotic deck?
+  4. How do you plate the cells without round petri dishes?
+  5. How do we validate the outputs?
+  6. How do you know which to repeat?
+
+Rather than scope a new technology, we rigorously optimize each basic step in a
+way that we can reuse for other experiments. For example, the plating protocol
+we developed (6.5uL in a p20m tip 10mm above a plate, dispense 5uL slowly to
+create a droplet on the tip, then stab the agar to create an evenly sized drop
+on the surface that doesn't mix with other droplets on an SBS format plate. Dry
+plate for approximately 15 minutes) we can use for things like colony counting,
+transformation, or directed evolution. We build a library of these basic
+protocols that can be recombined in new experiments.
+
+For synthetic DNA assembly, we focused on the small things that nobody else
+really cares about, like competent cell usage, specialized plasmid barcoding,
+and operational simplicity for moving plates around. These add up to significant
+savings: we predict we can synthesize 1kbp of clonal DNA at scale for
+approximately 1/6 to 1/3 ($10-$20) of the incumbent's (Twist Bioscience) current
+cost-of-goods ($60), which has not significantly changed in approximately 10yr.
+
+
+
+1. Current Progress
+
+We have 3 current customers. We choose these customers because their
+workflows are generally useful to lots of other people, and can be used as
+material input for future protocols.
+
+We have additional demand for each category that we are currently unable to
+serve with our current level of automation.
+
+  Customer A: Cloned Plasmids - animal testing
+    I. What are we doing?
+	  - we build and validate synthetic DNA that is used to test DNA-based drugs
+	    in animals
+	II. How valuable is it?
+	  - we charged approximately $100 per construct and have delivered 150
+		constructs: (Total revenue: $15,000)
+    III. What is the market size?
+	  - ~$2B, based on Twist's IPO documents for DNA maker's market [3]
+
+  Customer B: Cloned Plasmids - AI protein testing
+    I. What are we doing?
+	  - we build and validate synthetic DNA that is used to express AI-designed
+	    proteins
+	II. How valuable is it?
+	  - we charged approximately $60 per construct and delivered 192 constructs:
+		(Total revenue: $12,000)
+    III. What is the market size?
+	  - ~$2B
+
+  Customer C: Linear DNA - AI protein testing
+    I. What are we doing?
+	  - we provide synthetic DNA that is used to express AI-designed proteins
+	II. How valuable is it?
+	  - we charged approximately $10 per construct and delivered 1000
+		constructs: (Total revenue: $10,000). These are significantly simpler
+		than Customer A and B's constructs, hence the price difference
+    III. What is the market size?
+	  - Much smaller (we speculate $10M to low $100M, little data), but this
+	    protocol is useful as a material input to more valuable processes.
+
+What we learned:
+  1. Customers value the ability to recursively clone much more than we expected,
+	 to the point where it is the primary value draw. (what this means is they
+	 want the material they create to be used as input material for another
+	 reaction or process)
+  2. AI protein companies are more price-sensitive but timeline-and-failure
+	 accepting than traditional biotech customers because they just need to train
+	 models. Great for a small biotech company like us
+  3. Figuring out sequencing is absolutely essential. This is our primary
+	 operational material cost (before switching providers was >80% of the spend
+	 for constructs)
+Unit economics:
+  - All services are independently profitable from a material cost perspective:
+    customer A: during order, brought per construct cost from ~$90 to ~$30,
+	  while selling for $100
+	customer C: per construct cost of approximately $5, while selling for $10
+  - Labor isn't profitable. Right now, to create around 10k of revenue, 2 to 4
+    weeks of human labor is required. Once we have automated systems we get a
+	~5x-10x decrease in labor costs, with only a ~20% increase in cost due to
+	automation-compatible plastics.
+
+
+
+2. The Dirty work ahead
+
+Our most difficult challenges have been technical. The protocols which we run
+for customers are very labor intensive. While this labor is automatable, we've
+only been running a partially automated system while we figure out exactly what
+to build by working with customers. Without full integration of the robotic and
+software systems we can only serve limited customers, but also learn exactly
+what we need to build.
+
+So far, sales have not been a problem. There is demand for our services, but we
+have not been able to serve it due to the labor-intensive nature without our
+robotic systems in place. For example, we have a prospective customer that wants
+to buy ~200 genes from us, but we haven't had the time to process the order. We
+foresee this to be largely the case in the future, as our edge is ultra-low-cost
+robotic labor, and we only move into markets where we know there is demand and
+that we can hedge our unique advantage.
+
+Our hypothesis is that, like with deploying software, there will be a massive
+transition away from in-house labs to remote cloud labs. Right now, the market
+is approximately $50B to $80B for more bespoke CRO services. If we see a
+transition away from companies managing both the lab and the software/services
+on top of those labs and towards companies only managing software/services in
+our lab, we can create and capture billions in value. 
+
+
+
+3. Our raise
+
+We are raising $1.5M to fund capex and operations for 18 months. We hope to hit
+the following milestones:
+  A. Public launch of DNA assembly services (delivering ~96 plasmids per week)
+  B. Grow from 3 to 20 customers
+  C. One fully functioning automated workstation which can:
+     - pipette
+	 - thermocycle
+	 - incubate (static and shaking)
+	 - plate read
+	 - centrifuge
+	 - 4c storage
+
+If you need more details, talk to us.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+NOTE: Below are optional reading to understand the ideas of Genetic Assemblies.
+If you are interested in the theory of Genetic Assemblies, read ahead.
+Otherwise, thanks for your time.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+						   Genetic Assemblies Theory
+
+				 Monopolization of Centralized Experimentation
+
+Technological monopolies share some combination of the following characteristics:
+  1. Network Effects
+  2. Economies of Scale
+  3. Proprietary Technology
+  4. Branding
+
+We believe that running biological laboratories is particularly prone to
+monopolization for several reasons. We lay out our argument for this, and
+conclude with how this impacts the direction of our company.
+
+1. Biology has product and customer network effects
+
+Product network effects are when a particular product becomes more valuable as a
+function of how many people use it, with social networks being a perfect
+example. Customer network effects are when the value of a product can increase the
+more customers use it, with search engines being a perfect example.
+
+Biological experimentation has both, so long as the protocols being run are
+open. Science is based on replicating published papers: through people simply
+replicating and tweaking experiments, we can know what operations need
+optimization (customer network effects). But more importantly, so long as
+people publish with experiments run in our lab, the lab itself becomes more
+valuable. Any scientist who wants to expand on previous research will read
+publications in their field. If everyone is running their experiments with
+Genetic Assemblies, this makes them feel secure in running it with us. In fact,
+if they didn't run their experiment with our labs, it would be less
+scientifically rigorous: they are changing a variable (whose lab) that everyone
+else has agreed on, and therefore they have to personally investigate the
+downstream effects of that. Better to just stay safe and run it with us, where
+it is easier and cheaper.
+
+All other cloud labs ignore this dynamic. All have targeted pharma companies and
+larger industrial clients who *do not publish* their experimental protocols. For
+this reason, we plan to begin with smaller companies and academics who will
+share, in niche markets, before expanding.
+
+2. Biology has economies of scale
+
+Our most common reaction called "GoldenGate Assembly" (for assembling DNA) costs
+about $1 in enzymes from New England Biolabs. If you produce it yourself, for
+about $100 to $200 you can produce 10,000,000 reactions worth. Academic labs
+actually sometimes do do this, but normally companies do not because it takes
+effort and troubleshooting, which if they just need 1 great enzyme doesn't help
+the bottom line.
+
+Companies that can take advantage of economies of scale make massive amounts of
+profit, like Illumina or NEB. Often, however, the problem is distribution of
+those advancements.
+
+Biology is rife with examples of economies of scale - from transformation
+efficiency, to enzyme production, to sequencing, but often they're too disparate
+and innovating doesn't impact much profit usually. Distribution of innovations,
+like new cloning strains, is too difficult and people don't want to put the
+effort into changing. Genetic Assemblies has the unique advantage of
+centralization and trust, meaning we can immediately distribute innovations. All
+the protocols are running in our own lab anyway, and are controlled by software,
+not by trained humans. Our focus is on the pedagogy of the machine rather than
+the lab technician, which scales much better. This distribution allows us to
+effectively create and capture the value of any economy of scale we discover.
+
+3. Proprietary Technology
+
+We're not a biology company; our users are. Much like TSMC doesn't design chips,
+we do not compete with our customers. Labs like Ginkgo, and to some degree
+Twist, can and do compete with their own customers with proprietary technology.
+This is short term thinking.
+
+Our proprietary technology is in the ways we put together and run experiments,
+and in the logistics of our operations. Weakening of proprietary biotechnology,
+through open source enzymes or open source strains, is effectively
+commoditizing our complement, and driving more demand towards our services.
+
+4. Branding
+
+We want Genetic Assemblies to be known for biological innovation and doing
+awesome biology experiments. Genuine and authentic joy for synthetic biology is
+core to who we are! Sometimes, we run fun experiments to just do things - maybe
+a genetically engineered logo, or unique Genetic Assemblies-only GMO foods for
+events. I founded this company because I believe in open source biotechnology
+for all, and the route of a centralized corporation running experiments is the
+only structure I could think of that aligns my motivations with a ruthless
+profit-motive, and hence, growth of my goals (tracked by revenue).
+
+We care about awesome biological innovation and making experimentation cheaper
+for everyone. We don't want just anti-vaxxers, we want rogue-vaxxers, making
+their own vaccines! We want high schoolers and family farmers and patients to be
+able to make their own awesome biological creations. This fundamental power, the
+power of what we are, belongs not to just a handful of corporations, but to all.
+We care about the ones who can't afford to build their own lab, we want to free
+the ones chained to a bench doing experiments by hand. If you are to die from a
+disease, who is to say you should not fight against the dying of the light with
+the power of your own mind and the graceful actuation of our machines? Let's build
+biotechnology that is more imaginative, more accessible, and more free; let's
+build beautiful biotechnology, driven not only by the invisible hand but by the
+dreams of human beings.
+
+This kind of rhetoric is unique in the corporatized and "safe" world of
+biology. Rather than explain it, we chose to demonstrate above. It is
+polarizing yet truthful in our founding motivations, and may be an effective
+tool in hiring and selling the vision of our corporation.
+
+We know that other kinds of branding will be important in effectively
+communicating our company's values, and we do not shy away from expecting this
+to be an important part of the company, rather than an afterthought.
+
+5. Conclusion
+
+To review:
+  1. Publication of biological experiments makes for natural network effects.
+  2. There are many economies of scale in biology: centralization solves the
+     problem of distributing solutions.
+  3. We are focused on where we develop our proprietary technology
+  4. We have unique, opinionated, and polarizing beliefs and a strong belief in
+     the power of storytelling, rather than simply advertising, for branding
+
+The basic fundamentals of biological experimentation make it primed for
+monopoly, and so far has only been free of monopoly due to human communication
+costs. This is changing right now, and we believe now will be the only time to
+capture a lasting monopolistic position in this multi-billion dollar market.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+                           Genetic Assemblies Theory
+
+                General Automation will beat Specific Automation
+                                       Or
+                               CPUs over Circuits
+
+
+Plasmidsaurus, a company doing nanopore sequencing, is the most laudable example
+of a startup in the biotechnology space which has taken off. Their business
+model worked because they replaced the existing Sanger sequencing infrastructure
+of dropboxes with superior technology, and then got great at logistics.
+Sequencing gets back to most customers within a couple hours of pickup using a
+lab with many Opentrons liquid handlers and optimized workflows, and then the
+data is delivered to customers in a convenient format.
+
+This is a successful deep-tech company, bootstrapped, and profitable. But in our
+mind, also limited, in that they've gotten very efficient at one specific niche
+(sequencing services), without building the capacities to automate other
+experiments - which is very difficult to integrate to build later. This limits
+their ability to become a multi-billion dollar company, as the moat to
+competition is relatively low - as shown by companies like Angstrom Innovation
+undercutting Plasmidsaurus by 3x in their core business - and the fact that
+adaptation slows when you need humans to run your lab.
+
+Genetic Assemblies is fundamentally a services business. People pay us to do
+something. What is our strategy to become a multi-billion dollar business?
+
+The theory of Genetic Assemblies is that:
+  1. Aggregation of services in one lab lowers the human labor cost of any
+     given service
+  2. A general lab system improves the velocity of developing or improving any
+     specific service
+
+For idea #1, we can take an extremely simple example, loading SYBR Green. SYBR
+Green is used to quantify DNA. Quantification of DNA is needed in a bunch of
+different systems: both for DNA sequencing and for cell-free protein expression.
+While there are economies of scale when purchasing, the simple fact that you
+only need humans to load the automated system once with a certain chemical
+doubles the efficiency compared to having to load the system twice in two
+different labs doing two different services. You can then aggregate *all inputs*
+to biological experiments, and see how this dramatically lowers the relative
+human-labor time per experiment.
+
+As you add more services, this advantage compounds. As you increase the number
+of services running out of a single automated system, you decrease the relative
+human labor needed to run any one of those individual services. At a certain
+point, running many customer experiments will essentially require zero human
+labor, other than the marginal cost of adding more of a given reagent.
+
+For idea #2, the simple idea is that if a lab system is developed for general
+purpose use, it will naturally be optimized for research and development. For a
+counter-example, Plasmidsaurus uses a bunch of Opentrons OT2 robots, which makes
+for killer economics since they're low cost robots. But they are very difficult
+to add more automation onto, which is fine: their economics work well with
+techs+robots, and they just need to add more labs and better logistics.
+
+For us, Opentrons OT2 are insufficient. We're starting with DNA cloning, where
+there are incubation steps and centrifugation steps (the labor intensive nature
+is why we have a market edge right now). Our process requires methods that can't
+just run on a single robot, and so we must develop capability to handle that. As
+a convenient consequence (and in part why we started where we did), our system
+can handle autonomously loading, running, and unloading material without human
+intervention. This allows us to run the lab as software, rather than as an
+esoteric and idiosyncratic protocol to be run by humans. 
+
+We're betting that this software-based rather than protocol-based development of
+services means we can iterate at a much faster pace than companies which work in
+a singular niche, akin to how CPUs took over the world compared to circuits.
+Circuits may be more efficient at certain tasks, but CPUs could be controlled by
+software rather than hardware, and allowed far more rapid iteration speed. In
+the end, tasks being defined by software changed everything. We are building a
+CPU, not a circuit, for lab work.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+References:
+1. https://openai.com/index/accelerating-biological-research-in-the-wet-lab/
+2. https://www.futurehouse.org/research-announcements/demonstrating-end-to-end-scientific-discovery-with-robin-a-multi-agent-system
+3. https://www.sec.gov/Archives/edgar/data/1581280/000119312518291186/d460243ds1.htm
+4. https://www.marketsandmarkets.com/Market-Reports/contract-research-organization-service-market-167410116.html
+5. https://pmc.ncbi.nlm.nih.gov/articles/PMC10949349/
