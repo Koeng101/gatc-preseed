@@ -25,6 +25,8 @@ export const PitchSlide: React.FC<PitchSlideProps> = ({ slide }) => {
       return <StepsSlide slide={slide} />;
     case 'insights':
       return <InsightsSlide slide={slide} />;
+    case 'strategy':
+      return <StrategySlide slide={slide} />;
     case 'team':
       return <TeamSlide slide={slide} />;
     case 'placeholder':
@@ -183,6 +185,100 @@ const InsightsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
             <p className="text-sm font-mono text-slate-600 leading-relaxed">{step.description}</p>
           </div>
         </motion.div>
+      ))}
+    </div>
+  </div>
+);
+
+type PyToken = { text: string; color: string };
+
+function highlightPython(line: string): PyToken[] {
+  const tokens: PyToken[] = [];
+  const re = /(\w+(?=\())|(\w+\.\w+(?=\())|([a-zA-Z_]\w*)|([().,=])|(\s+)/g;
+  let match: RegExpExecArray | null;
+  let last = 0;
+  while ((match = re.exec(line)) !== null) {
+    if (match.index > last) {
+      tokens.push({ text: line.slice(last, match.index), color: 'text-slate-300' });
+    }
+    const text = match[0];
+    let color: string;
+    if (match[2]) {
+      // method call like ws.pipette
+      const [obj, method] = text.split('.');
+      tokens.push({ text: obj, color: 'text-slate-300' });
+      tokens.push({ text: '.', color: 'text-slate-500' });
+      tokens.push({ text: method, color: 'text-yellow-300' });
+      last = re.lastIndex;
+      continue;
+    } else if (match[1]) {
+      // function call
+      color = 'text-yellow-300';
+    } else if (/^[().,]$/.test(text)) {
+      color = 'text-slate-500';
+    } else if (text === '=') {
+      color = 'text-sky-400';
+    } else if (/^\s+$/.test(text)) {
+      color = '';
+    } else {
+      color = 'text-slate-300';
+    }
+    tokens.push({ text, color });
+    last = re.lastIndex;
+  }
+  if (last < line.length) {
+    tokens.push({ text: line.slice(last), color: 'text-slate-300' });
+  }
+  return tokens;
+}
+
+const StrategySlide: React.FC<PitchSlideProps> = ({ slide }) => (
+  <div className="min-h-full md:h-full flex flex-col items-center md:justify-center px-4 md:px-8 py-10 md:py-0">
+    <motion.h2
+      {...fadeUp}
+      className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-6 md:mb-12 text-center"
+    >
+      {slide.headline}
+    </motion.h2>
+    <div className="flex flex-col md:flex-row items-stretch max-w-[1200px] w-full">
+      {slide.strategyPhases?.map((phase, i) => (
+        <div key={i} className="flex flex-col md:flex-row items-center flex-1">
+          {i > 0 && (
+            <>
+              <div className="hidden md:flex items-center px-3">
+                <span className="text-3xl font-black text-[#ff4d00]">&rarr;</span>
+              </div>
+              <div className="flex md:hidden items-center py-3">
+                <span className="text-3xl font-black text-[#ff4d00]">&darr;</span>
+              </div>
+            </>
+          )}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: 0.2 + i * 0.15 }}
+            className="border-2 border-black bg-white p-6 shadow-hard w-full"
+          >
+            <div className="w-10 h-10 bg-[#ff4d00] text-white flex items-center justify-center font-black text-lg mb-4 border-2 border-black">
+              {phase.number}
+            </div>
+            <h3 className="text-xl font-black uppercase mb-2">{phase.title}</h3>
+            <p className="text-sm font-mono text-slate-700 mb-4">{phase.description}</p>
+            {phase.code && (
+              <div className="bg-black border-2 border-black p-4">
+                {phase.code.map((line, j) => (
+                  <div key={j} className="font-mono text-xs leading-relaxed">
+                    <span className="text-slate-500">{'>>> '}</span>
+                    {highlightPython(line).map((tok, k) => (
+                      <span key={k} className={tok.color}>{tok.text}</span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        </div>
       ))}
     </div>
   </div>

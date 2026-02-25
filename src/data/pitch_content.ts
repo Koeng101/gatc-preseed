@@ -1,10 +1,11 @@
 export interface PitchSlide {
   id: string;
-  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'team' | 'placeholder';
+  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'strategy' | 'team' | 'placeholder';
   headline: string;
   subheadline?: string;
   bullets?: string[];
   steps?: { number: number; title: string; description: string }[];
+  strategyPhases?: { number: number; title: string; description: string; code?: string[] }[];
   teamMembers?: { name: string; role: string; bio: string }[];
   vizId?: string;
   vizLabel?: string;
@@ -67,24 +68,59 @@ export const pitchSlides: PitchSlide[] = [
     ],
   },
   {
+    id: 'strategy',
+    layout: 'strategy',
+    headline: 'Strategy',
+    strategyPhases: [
+      {
+        number: 1,
+        title: 'Profitable services',
+        description: 'Offer basic services — DNA synthesis, protein expression, cell line transformation — that generate revenue from day one.',
+        code: [
+          'gfp = synthesize(gfp_sequence)',
+        ],
+      },
+      {
+        number: 2,
+        title: 'Programmatic composition',
+        description: 'Let users string services together with code.',
+        code: [
+          'gfp = synthesize(gfp_sequence)',
+          'gfp_protein = express(gfp)',
+          'result = measure(gfp_protein)',
+        ],
+      },
+      {
+        number: 3,
+        title: 'Workstation access',
+        description: 'Extend the API to full workstation control — manual pipetting, measuring, incubation — all orchestrated remotely.',
+        code: [
+          'ws = connect_workstation()',
+          'ws.pipette(gfp_protein, plate_1)',
+          'reading = ws.measure_fluorescence(plate_1)',
+        ],
+      },
+    ],
+  },
+  {
     id: 'key-insights',
     layout: 'insights',
     headline: 'Key insights',
     steps: [
       {
         number: 1,
-        title: 'Nobody wants to run their own robots',
-        description: 'Maintenance, training, programming, and material input/output are all hard. Why deal with that when you have on-demand access to guaranteed working systems?',
+        title: 'AI changes everything',
+        description: 'AI scientists are the future, but are bottlenecked by lab experiments. We are building a lab that allows agents to express their full power.',
       },
       {
         number: 2,
-        title: 'Logistics, logistics, logistics',
-        description: 'Cloud biology labs have failed when they don\'t provide easy ways to get started and be useful to the median scientist.',
+        title: 'Nobody wants to run their own robots',
+        description: 'Maintenance, training, reliability, and material input/output are all hard. This takes significant skilled human labor. Why deal with that when you have on-demand access to guaranteed working systems?',
       },
       {
         number: 3,
-        title: 'AI changed everything',
-        description: 'AI scientists are bottlenecked by experiments in the lab. As they get better, demand will only go up for remote labs.',
+        title: 'Logistics, logistics, logistics',
+        description: 'Cloud biology labs have failed when they don\'t provide easy ways to get started and be useful to the median scientist. We want to be useful to everyone, not just the largest corporations.',
       },
     ],
   },
