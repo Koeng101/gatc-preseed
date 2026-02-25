@@ -35,9 +35,9 @@ export const PitchSlide: React.FC<PitchSlideProps> = ({ slide }) => {
 };
 
 const HookSlide: React.FC<PitchSlideProps> = ({ slide }) => (
-  <div className="h-full flex items-center justify-center px-8">
+  <div className="min-h-full md:h-full flex items-center justify-center px-4 md:px-8 py-10 md:py-0">
     <motion.div {...fadeUp} className="max-w-[900px] text-center">
-      <h1 className="text-5xl md:text-7xl font-black text-black leading-[0.95] uppercase mb-6">
+      <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-black leading-[0.95] uppercase mb-6">
         {slide.headline}
       </h1>
       {slide.subheadline && (
@@ -50,10 +50,10 @@ const HookSlide: React.FC<PitchSlideProps> = ({ slide }) => (
 );
 
 const BulletsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
-  <div className="h-full flex items-center px-8">
+  <div className="min-h-full md:h-full flex items-center px-4 md:px-8 py-10 md:py-0">
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 max-w-[1200px] mx-auto w-full items-center">
       <motion.div {...fadeUp} className="flex-1">
-        <h2 className="text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-4">
           {slide.headline}
         </h2>
         {slide.subheadline && (
@@ -85,7 +85,7 @@ const BulletsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
           transition={{ duration: 0.4, delay: 0.3 }}
           className="flex-1 w-full"
         >
-          <VisualizationPlaceholder label={slide.vizLabel} className="h-[250px]" />
+          <VisualizationPlaceholder label={slide.vizLabel} className="h-[180px] md:h-[250px]" />
         </motion.div>
       )}
     </div>
@@ -93,10 +93,10 @@ const BulletsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
 );
 
 const VizSlide: React.FC<PitchSlideProps> = ({ slide }) => (
-  <div className="h-full flex items-center px-8">
+  <div className="min-h-full md:h-full flex items-center px-4 md:px-8 py-10 md:py-0">
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 max-w-[1200px] mx-auto w-full items-center">
       <motion.div {...fadeUp} className="flex-1">
-        <h2 className="text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-4">
           {slide.headline}
         </h2>
         {slide.subheadline && (
@@ -121,7 +121,7 @@ const VizSlide: React.FC<PitchSlideProps> = ({ slide }) => (
           transition={{ duration: 0.4, delay: 0.3 }}
           className="flex-1 w-full"
         >
-          <VisualizationPlaceholder label={slide.vizLabel} className="h-[300px]" />
+          <VisualizationPlaceholder label={slide.vizLabel} className="h-[180px] md:h-[300px]" />
         </motion.div>
       )}
     </div>
@@ -129,10 +129,10 @@ const VizSlide: React.FC<PitchSlideProps> = ({ slide }) => (
 );
 
 const StepsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
-  <div className="h-full flex flex-col items-center justify-center px-8">
+  <div className="min-h-full md:h-full flex flex-col items-center md:justify-center px-4 md:px-8 py-10 md:py-0">
     <motion.h2
       {...fadeUp}
-      className="text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-12 text-center"
+      className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-6 md:mb-12 text-center"
     >
       {slide.headline}
     </motion.h2>
@@ -158,10 +158,10 @@ const StepsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
 );
 
 const InsightsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
-  <div className="h-full flex flex-col items-center justify-center px-8">
+  <div className="min-h-full md:h-full flex flex-col items-center md:justify-center px-4 md:px-8 py-10 md:py-0">
     <motion.h2
       {...fadeUp}
-      className="text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-14 text-center"
+      className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-8 md:mb-14 text-center"
     >
       {slide.headline}
     </motion.h2>
@@ -175,8 +175,8 @@ const InsightsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
           transition={{ duration: 0.4, delay: 0.15 + i * 0.12 }}
           className="flex items-stretch border-b-2 border-black last:border-b-0"
         >
-          <div className="w-20 md:w-28 shrink-0 bg-[#ff4d00] flex items-center justify-center border-r-2 border-black">
-            <span className="text-4xl md:text-5xl font-black text-white">{step.number}</span>
+          <div className="w-14 md:w-20 lg:w-28 shrink-0 bg-[#ff4d00] flex items-center justify-center border-r-2 border-black">
+            <span className="text-3xl md:text-4xl lg:text-5xl font-black text-white">{step.number}</span>
           </div>
           <div className="flex-1 py-6 px-6 md:px-8 bg-white">
             <h3 className="text-lg md:text-xl font-black uppercase mb-1">{step.title}</h3>
@@ -189,10 +189,10 @@ const InsightsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
 );
 
 const TeamSlide: React.FC<PitchSlideProps> = ({ slide }) => (
-  <div className="h-full flex flex-col items-center justify-center px-8">
+  <div className="min-h-full md:h-full flex flex-col items-center md:justify-center px-4 md:px-8 py-10 md:py-0">
     <motion.h2
       {...fadeUp}
-      className="text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-12 text-center"
+      className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-6 md:mb-12 text-center"
     >
       {slide.headline}
     </motion.h2>
@@ -219,10 +219,10 @@ const TeamSlide: React.FC<PitchSlideProps> = ({ slide }) => (
 );
 
 const PlaceholderSlide: React.FC<PitchSlideProps> = ({ slide }) => (
-  <div className="h-full flex items-center px-8">
+  <div className="min-h-full md:h-full flex items-center px-4 md:px-8 py-10 md:py-0">
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 max-w-[1200px] mx-auto w-full items-center">
       <motion.div {...fadeUp} className="flex-1">
-        <h2 className="text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-4">
           {slide.headline}
         </h2>
         {slide.subheadline && (
@@ -247,7 +247,7 @@ const PlaceholderSlide: React.FC<PitchSlideProps> = ({ slide }) => (
           transition={{ duration: 0.4, delay: 0.3 }}
           className="flex-1 w-full"
         >
-          <VisualizationPlaceholder label={slide.vizLabel} className="h-[250px]" />
+          <VisualizationPlaceholder label={slide.vizLabel} className="h-[180px] md:h-[250px]" />
         </motion.div>
       )}
     </div>

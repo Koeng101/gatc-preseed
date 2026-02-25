@@ -8,7 +8,7 @@ interface EssayViewProps {
 export const EssayView: React.FC<EssayViewProps> = ({ essay }) => {
   return (
     <div className="h-full overflow-y-auto">
-      <div className="max-w-[750px] mx-auto px-8 py-16">
+      <div className="max-w-[750px] mx-auto px-4 py-8 md:px-8 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -17,7 +17,7 @@ export const EssayView: React.FC<EssayViewProps> = ({ essay }) => {
           <div className="inline-block bg-black text-white px-3 py-1 font-mono text-xs font-bold uppercase mb-6">
             {essay.subtitle}
           </div>
-          <h1 className="text-5xl font-black text-black mb-12 leading-[0.95] uppercase">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-black mb-12 leading-[0.95] uppercase">
             {essay.title}
           </h1>
         </motion.div>

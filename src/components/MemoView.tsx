@@ -57,7 +57,7 @@ export const MemoView: React.FC = () => {
   if (isMobile) {
     return (
       <div className="h-full overflow-y-auto">
-        <div className="px-6 py-12 max-w-[750px] mx-auto">
+        <div className="px-4 py-8 md:px-6 md:py-12 max-w-[750px] mx-auto">
           <MemoContent sectionRefs={sectionRefs} inline />
         </div>
       </div>
@@ -119,7 +119,7 @@ const MemoContent: React.FC<{
         <div className="inline-block bg-black text-white px-3 py-1 font-mono text-xs font-bold uppercase mb-6">
           Investor Memo
         </div>
-        <h1 className="text-5xl font-black text-black mb-12 leading-[0.95] uppercase">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-black mb-12 leading-[0.95] uppercase">
           Genetic Assemblies
         </h1>
       </motion.div>

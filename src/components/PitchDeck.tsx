@@ -42,7 +42,7 @@ export const PitchDeck: React.FC = () => {
               if (el) slideRefs.current.set(i, el);
             }}
             data-slide-index={i}
-            className="pitch-slide h-full min-h-full"
+            className="pitch-slide min-h-full md:h-full"
           >
             <PitchSlide slide={slide} />
           </div>
@@ -50,12 +50,12 @@ export const PitchDeck: React.FC = () => {
       </div>
 
       {/* Dot indicators (right edge) */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-10">
+      <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2 md:gap-3 z-10">
         {pitchSlides.map((_, i) => (
           <button
             key={i}
             onClick={() => scrollToSlide(i)}
-            className={`w-3 h-3 border-2 border-black transition-all !shadow-none !p-0 ${
+            className={`w-2 h-2 md:w-3 md:h-3 border-2 border-black transition-all !shadow-none !p-0 ${
               activeIndex === i ? 'bg-[#ff4d00]' : 'bg-white'
             }`}
             aria-label={`Go to slide ${i + 1}`}

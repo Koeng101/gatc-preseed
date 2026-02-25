@@ -65,8 +65,14 @@ button:active {
 
 /* Pitch Deck Scroll Snap */
 .pitch-deck-container {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  .pitch-deck-container {
+    scroll-snap-type: y mandatory;
+  }
 }
 
 .pitch-slide {

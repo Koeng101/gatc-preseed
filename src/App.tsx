@@ -10,10 +10,23 @@ function App() {
   const [activeTab, setActiveTab] = useState<TabId>('deck')
 
   return (
-    <div className="h-screen w-full relative bg-[#f2f0e9] text-black font-mono overflow-hidden flex">
+    <div className="h-screen w-full relative bg-[#f2f0e9] text-black font-mono overflow-hidden flex flex-col md:flex-row">
 
-      {/* Brutalist Left Sidebar */}
-      <aside className="h-full w-56 shrink-0 border-r-2 border-black bg-white z-40 flex flex-col">
+      {/* Mobile Top Bar */}
+      <header className="flex md:hidden flex-col border-b-2 border-black bg-white z-40 shrink-0">
+        <div className="h-12 border-b-2 border-black flex items-center px-3 gap-2">
+          <div className="w-8 h-8 bg-black flex items-center justify-center text-white border-2 border-black shrink-0">
+            <Dna size={18} />
+          </div>
+          <span className="font-bold tracking-tight text-black text-xs uppercase leading-tight">GENETIC_ASSEMBLIES</span>
+        </div>
+        <div className="overflow-x-auto px-2 py-2">
+          <TabNav activeTab={activeTab} onTabChange={setActiveTab} horizontal />
+        </div>
+      </header>
+
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:flex h-full w-56 shrink-0 border-r-2 border-black bg-white z-40 flex-col">
          <div className="h-16 border-b-2 border-black flex items-center px-4 gap-3">
             <div className="w-10 h-10 bg-black flex items-center justify-center text-white border-2 border-black shadow-[2px_2px_0px_0px_white] shrink-0">
                <Dna size={24} />
@@ -27,7 +40,7 @@ function App() {
       </aside>
 
       {/* Main Viewport */}
-      <main className="h-full flex-1 relative z-0">
+      <main className="flex-1 min-h-0 relative z-0">
          {activeTab === 'deck' && <PitchDeck />}
          {activeTab === 'memo' && <MemoView />}
          {activeTab === 'essay_01' && <EssayView essay={essay01} />}
