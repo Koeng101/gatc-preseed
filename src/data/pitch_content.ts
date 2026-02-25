@@ -93,7 +93,7 @@ export const pitchSlides: PitchSlide[] = [
       {
         number: 3,
         title: 'Workstation access',
-        description: 'Extend the API to full workstation control — manual pipetting, measuring, incubation — all orchestrated remotely.',
+        description: 'Extend the API to full workstation control — manual pipetting, measuring, incubation — to run your novel experiment.',
         code: [
           'ws = connect_workstation()',
           'ws.pipette(gfp_protein, plate_1)',

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import type { PitchSlide as PitchSlideData } from '../data/pitch_content';
 import { VisualizationPlaceholder } from './VisualizationPlaceholder';
+import { GaIcon } from './GaIcon';
 
 interface PitchSlideProps {
   slide: PitchSlideData;
@@ -47,6 +48,10 @@ const HookSlide: React.FC<PitchSlideProps> = ({ slide }) => (
           {slide.subheadline}
         </p>
       )}
+      <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-5 mt-8">
+        <GaIcon size={128} />
+        <span className="font-mono font-bold text-xl md:text-3xl tracking-tight uppercase">GENETIC_ASSEMBLIES</span>
+      </div>
     </motion.div>
   </div>
 );

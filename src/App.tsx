@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Dna } from 'lucide-react'
+import { GaIcon } from './components/GaIcon'
 import { TabNav, type TabId } from './components/TabNav'
 import { PitchDeck } from './components/PitchDeck'
 import { MemoView } from './components/MemoView'
@@ -14,10 +14,8 @@ function App() {
 
       {/* Mobile Top Bar */}
       <header className="flex md:hidden flex-col border-b-2 border-black bg-white z-40 shrink-0">
-        <div className="h-12 border-b-2 border-black flex items-center px-3 gap-2">
-          <div className="w-8 h-8 bg-black flex items-center justify-center text-white border-2 border-black shrink-0">
-            <Dna size={18} />
-          </div>
+        <div onClick={() => setActiveTab('deck')} className="h-12 border-b-2 border-black flex items-center px-3 gap-2 cursor-pointer">
+          <GaIcon size={32} />
           <span className="font-bold tracking-tight text-black text-xs uppercase leading-tight">GENETIC_ASSEMBLIES</span>
         </div>
         <div className="overflow-x-auto px-2 py-2">
@@ -27,10 +25,8 @@ function App() {
 
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex h-full w-56 shrink-0 border-r-2 border-black bg-white z-40 flex-col">
-         <div className="h-16 border-b-2 border-black flex items-center px-4 gap-3">
-            <div className="w-10 h-10 bg-black flex items-center justify-center text-white border-2 border-black shadow-[2px_2px_0px_0px_white] shrink-0">
-               <Dna size={24} />
-            </div>
+         <div onClick={() => setActiveTab('deck')} className="h-16 border-b-2 border-black flex items-center px-4 gap-3 cursor-pointer">
+            <GaIcon size={36} />
             <span className="font-bold tracking-tight text-black text-sm uppercase leading-tight">GENETIC_ASSEMBLIES</span>
          </div>
 
