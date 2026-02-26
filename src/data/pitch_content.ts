@@ -1,14 +1,17 @@
 export interface PitchSlide {
   id: string;
-  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'strategy' | 'team' | 'placeholder';
+  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'strategy' | 'team' | 'ask' | 'placeholder';
   headline: string;
   subheadline?: string;
   bullets?: string[];
-  steps?: { number: number; title: string; description: string }[];
+  steps?: { number: number; title: string; description: string; code?: string[]; image?: string; table?: { headers: string[]; rows: string[][] } }[];
   strategyPhases?: { number: number; title: string; description: string; code?: string[] }[];
   teamMembers?: { name: string; role: string; bio: string }[];
+  milestones?: { month: number; title: string; description: string }[];
+  footnote?: string;
   vizId?: string;
   vizLabel?: string;
+  vizImage?: string;
 }
 
 export const pitchSlides: PitchSlide[] = [
@@ -31,6 +34,7 @@ export const pitchSlides: PitchSlide[] = [
     ],
     vizId: 'manual-labor-problem',
     vizLabel: 'TIME IN LAB',
+    vizImage: 'problem.png',
   },
   {
     id: 'solution',
@@ -44,6 +48,7 @@ export const pitchSlides: PitchSlide[] = [
     ],
     vizId: 'solution-diagram',
     vizLabel: 'EXPERIMENT PIPELINE',
+    vizImage: 'solution.png',
   },
   {
     id: 'how-it-works',
@@ -54,16 +59,32 @@ export const pitchSlides: PitchSlide[] = [
         number: 1,
         title: 'Define',
         description: 'Describe your experiment — what materials to prepare, what to test, what data you need.',
+        code: [
+          '# nanobody binding experiment',
+          'nb = synthesize(nanobody_seq)',
+          'nb_protein = express(nb)',
+          'data = measure_binding(nb_protein, antigen)',
+        ],
       },
       {
         number: 2,
         title: 'Execute',
         description: 'Your experiment runs in our automated lab. Only pay for machine time you use.',
+        image: 'plate0_magsep.gif',
       },
       {
         number: 3,
         title: 'Deliver',
         description: 'Get back real biological data to inform your next round of experiments or train your model.',
+        table: {
+          headers: ['nanobody', 'Kd (nM)', 'expression'],
+          rows: [
+            ['Nb-α-HER2', '3.2', '58 mg/L'],
+            ['Nb-α-EGFR', '8.7', '41 mg/L'],
+            ['Nb-α-PD-L1', '1.9', '63 mg/L'],
+            ['Nb-α-VEGF', '12.4', '35 mg/L'],
+          ],
+        },
       },
     ],
   },
@@ -77,7 +98,8 @@ export const pitchSlides: PitchSlide[] = [
         title: 'Profitable services',
         description: 'Offer basic services — DNA synthesis, protein expression, cell line transformation — that generate revenue from day one.',
         code: [
-          'gfp = synthesize(gfp_sequence)',
+          '# simple synthesis',
+          'nb = synthesize(nanobody_seq)',
         ],
       },
       {
@@ -85,9 +107,10 @@ export const pitchSlides: PitchSlide[] = [
         title: 'Programmatic composition',
         description: 'Let users string services together with code.',
         code: [
-          'gfp = synthesize(gfp_sequence)',
-          'gfp_protein = express(gfp)',
-          'result = measure(gfp_protein)',
+          '# synthesis and testing',
+          'nb = synthesize(nanobody_seq)',
+          'nb_protein = express(nb)',
+          'data = measure_binding(nb_protein, antigen)',
         ],
       },
       {
@@ -95,9 +118,10 @@ export const pitchSlides: PitchSlide[] = [
         title: 'Workstation access',
         description: 'Enable general access to full workstation control API — manual pipetting, measuring, incubation — to run your novel experiment.',
         code: [
+          '# full workstation control',
           'ws = connect_workstation()',
-          'ws.pipette(gfp_protein, plate_1)',
-          'reading = ws.measure_fluorescence(plate_1)',
+          'ws.pipette(nb_protein, plate_1)',
+          'reading = ws.measure_binding(plate_1)',
         ],
       },
     ],
@@ -143,15 +167,14 @@ export const pitchSlides: PitchSlide[] = [
   },
   {
     id: 'ask',
-    layout: 'placeholder',
+    layout: 'ask',
     headline: 'The ask',
     subheadline: 'Raising $1.5M to fund capex and operations for 18 months.',
-    bullets: [
-      'Public launch of DNA assembly services (~96 plasmids/week)',
-      'Grow from 3 to 20 customers',
-      'One fully functioning automated workstation (pipette, thermocycle, incubate, plate read, centrifuge, 4°C storage)',
+    milestones: [
+      { month: 3, title: 'Automated workstation', description: 'One fully functioning automated workstation. All services and protocols will be developed using this workstation, with the absolute minimum human intervention.' },
+      { month: 6, title: 'Public launch', description: 'Public launch of DNA assembly services (~96 plasmids/week)*.' },
+      { month: 12, title: 'Profitability', description: 'We aim for profitability before next raise with our basic services.' },
     ],
-    vizId: 'milestones',
-    vizLabel: 'MILESTONE TIMELINE',
+    footnote: '* We\'ll continue serving customers before public launch, just more selectively. More workstations will come online as we need them.',
   },
 ];

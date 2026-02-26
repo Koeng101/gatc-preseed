@@ -45,7 +45,7 @@ export const memoSections: MemoSection[] = [
         paragraphs: [
           'Genetic Assemblies is solo-founded by Keoni Gandall. Keoni worked at UCI for 4 years in Chang Liu\'s lab in directed evolution and mitochondrial engineering, and then worked for 3 years in Drew Endy\'s lab at Stanford, running the FreeGenes Project. Afterwards, he cofounded Trilobio, a company manufacturing fully-automated lab robots. However, simply making hardware was not his calling, so he founded Genetic Assemblies, with the goal of full automation as a service. At Trilobio, Keoni was in charge of building the software systems for fully automated labs.',
           'Ben Ray has joined as our first founding engineer. Ben led the automation team at Retro Biosciences, a large and successful longevity startup, for 3.5 years before leaving and joining Genetic Assemblies. At Retro, Ben was in charge of building and maintaining the hardware for fully automated robotic systems using used robots and clever engineering.',
-          'We do not plan on hiring until we really need to. This will likely be either a software engineer or a lab technician; whichever we really need help with. Regardless, we encompass the software, hardware, and wetware skills necessary to build the first iteration of Genetic Assemblies.',
+          'We plan on hiring the most cracked engineers we can get our hands on. Most likely, this will be a software or hardware engineer. We do not plan on hiring many if any biologists.',
         ],
         vizId: 'team-overview',
         vizLabel: 'TEAM',
