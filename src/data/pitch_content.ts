@@ -1,11 +1,12 @@
 export interface PitchSlide {
   id: string;
-  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'strategy' | 'team' | 'ask' | 'placeholder';
+  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'strategy' | 'progress' | 'team' | 'ask' | 'placeholder';
   headline: string;
   subheadline?: string;
   bullets?: string[];
   steps?: { number: number; title: string; description: string; code?: string[]; image?: string; table?: { headers: string[]; rows: string[][] } }[];
   strategyPhases?: { number: number; title: string; description: string; code?: string[] }[];
+  progressPanels?: { label: string; lines: string[] }[];
   teamMembers?: { name: string; role: string; bio: string }[];
   milestones?: { month: number; title: string; description: string }[];
   footnote?: string;
@@ -144,9 +145,41 @@ export const pitchSlides: PitchSlide[] = [
       {
         number: 3,
         title: 'Logistics, logistics, logistics',
-        description: 'Cloud biology labs have failed when they don\'t provide easy ways to get started and be useful to the median scientist. We want to be useful to everyone, not just the largest corporations.',
+        description: 'Cloud biology labs have failed when they don\'t provide easy ways to get started and be useful to the median scientist. No other cloud lab has attempted our route of first providing simple, reliable, and cheap basic services that can be built upon.',
       },
     ],
+  },
+  {
+    id: 'progress',
+    layout: 'progress',
+    headline: 'Progress',
+    progressPanels: [
+      {
+        label: 'Now',
+        lines: ['$22k in 3 months (it\'s hard!)', '1 person fulfilling orders manually', 'Validated demand, learned customer needs'],
+      },
+      {
+        label: 'Next',
+        lines: ['5–10x capacity with a single workstation', 'Then scale by adding more workstations', '**We need your help**'],
+      },
+    ],
+  },
+  {
+    id: 'ask',
+    layout: 'ask',
+    headline: 'The ask',
+    subheadline: 'Raising $1.5M. We have the hardware for our first workstation. We need capital for:',
+    bullets: [
+      'Materials to test and validate protocols',
+      'A second workstation and backup hardware',
+      'Time to implement the necessary software (with the help of Claude)',
+    ],
+    milestones: [
+      { month: 3, title: 'Automated workstation', description: 'One fully functioning automated workstation. All services and protocols will be developed using this workstation, with the absolute minimum human intervention.' },
+      { month: 6, title: 'Public launch', description: 'Public launch of DNA assembly services (~96 plasmids/week)*.' },
+      { month: 12, title: 'Profitability', description: 'We aim for profitability before next raise with our basic services.' },
+    ],
+    footnote: '* We\'ll continue serving customers before public launch, just more selectively. More workstations will come online as we need them.',
   },
   {
     id: 'team',
@@ -164,17 +197,5 @@ export const pitchSlides: PitchSlide[] = [
         bio: 'Led the automation team at Retro Biosciences for 3.5 years. Built and maintained hardware for fully automated robotic systems using used robots and clever engineering.',
       },
     ],
-  },
-  {
-    id: 'ask',
-    layout: 'ask',
-    headline: 'The ask',
-    subheadline: 'Raising $1.5M to fund capex and operations for 18 months.',
-    milestones: [
-      { month: 3, title: 'Automated workstation', description: 'One fully functioning automated workstation. All services and protocols will be developed using this workstation, with the absolute minimum human intervention.' },
-      { month: 6, title: 'Public launch', description: 'Public launch of DNA assembly services (~96 plasmids/week)*.' },
-      { month: 12, title: 'Profitability', description: 'We aim for profitability before next raise with our basic services.' },
-    ],
-    footnote: '* We\'ll continue serving customers before public launch, just more selectively. More workstations will come online as we need them.',
   },
 ];

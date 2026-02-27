@@ -79,3 +79,17 @@ button:active {
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
+
+@keyframes pipetteShuttleX {
+  0%, 16%   { transform: translateX(5.5px); }
+  38%, 62%  { transform: translateX(-6.5px); }
+  84%, 100% { transform: translateX(5.5px); }
+}
+
+@keyframes pipetteShuttleY {
+  0%, 8%    { transform: translateY(7px); }
+  16%, 38%  { transform: translateY(0); }
+  46%, 54%  { transform: translateY(7px); }
+  62%, 84%  { transform: translateY(0); }
+  92%, 100% { transform: translateY(7px); }
+}

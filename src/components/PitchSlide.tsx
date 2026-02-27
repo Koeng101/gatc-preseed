@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import type { PitchSlide as PitchSlideData } from '../data/pitch_content';
 import { VisualizationPlaceholder } from './VisualizationPlaceholder';
@@ -36,6 +37,8 @@ export const PitchSlide: React.FC<PitchSlideProps> = ({ slide }) => {
       return <InsightsSlide slide={slide} />;
     case 'strategy':
       return <StrategySlide slide={slide} />;
+    case 'progress':
+      return <ProgressSlide slide={slide} />;
     case 'team':
       return <TeamSlide slide={slide} />;
     case 'ask':
@@ -351,6 +354,142 @@ const StrategySlide: React.FC<PitchSlideProps> = ({ slide }) => (
   </div>
 );
 
+const HumanSvg = () => (
+  <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Enclosure / room box */}
+    <rect x="5" y="10" width="110" height="100" rx="3" stroke="black" strokeWidth="4" fill="white" />
+    {/* Head */}
+    <circle cx="42" cy="30" r="10" fill="black" />
+    {/* Body */}
+    <rect x="33" y="42" width="18" height="30" rx="2" fill="black" />
+    {/* Left arm — resting */}
+    <rect x="19" y="46" width="14" height="5" rx="2" fill="black" />
+    {/* Right arm — holding pipette */}
+    <rect x="51" y="46" width="14" height="5" rx="2" fill="black" />
+    {/* Pipette */}
+    <rect x="65" y="38" width="4" height="22" rx="1" fill="#ff4d00" />
+    <rect x="66" y="60" width="2" height="7" fill="#ff4d00" />
+    {/* Legs */}
+    <rect x="35" y="72" width="6" height="22" rx="2" fill="black" />
+    <rect x="43" y="72" width="6" height="22" rx="2" fill="black" />
+    {/* Feet */}
+    <rect x="32" y="92" width="10" height="5" rx="2" fill="black" />
+    <rect x="42" y="92" width="10" height="5" rx="2" fill="black" />
+    {/* Table */}
+    <rect x="70" y="62" width="36" height="4" rx="1" fill="black" />
+    <rect x="74" y="66" width="4" height="30" rx="1" fill="black" />
+    <rect x="98" y="66" width="4" height="30" rx="1" fill="black" />
+    {/* Plate on table */}
+    <rect x="76" y="50" width="24" height="12" rx="2" stroke="black" strokeWidth="2" fill="white" />
+    {/* Plate wells */}
+    <circle cx="83" cy="54" r="2" fill="#ff4d00" />
+    <circle cx="88" cy="54" r="2" fill="black" />
+    <circle cx="93" cy="54" r="2" fill="black" />
+    <circle cx="83" cy="59" r="2" fill="black" />
+    <circle cx="88" cy="59" r="2" fill="black" />
+    <circle cx="93" cy="59" r="2" fill="black" />
+  </svg>
+);
+
+const RobotSvg = () => (
+  <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Enclosure frame */}
+    <rect x="5" y="10" width="110" height="100" rx="3" stroke="black" strokeWidth="4" fill="white" />
+    {/* Top rail (X gantry) */}
+    <rect x="10" y="18" width="100" height="5" rx="1" fill="black" />
+    {/* Pipette assembly — outer group moves horizontally along X gantry */}
+    <g style={{ animation: 'pipetteShuttleX 5s ease-in-out infinite' }}>
+      {/* Vertical rail (Y gantry) */}
+      <rect x="68" y="18" width="5" height="50" rx="1" fill="black" />
+      {/* Inner group dips vertically into wells */}
+      <g style={{ animation: 'pipetteShuttleY 5s ease-in-out infinite' }}>
+        {/* Pipette head */}
+        <rect x="65" y="52" width="11" height="14" rx="2" fill="black" />
+        {/* Pipette tip */}
+        <rect x="69" y="66" width="3" height="16" rx="1" fill="#ff4d00" />
+      </g>
+    </g>
+    {/* Plate gripper arm — hangs from gantry */}
+    <rect x="30" y="18" width="5" height="42" rx="1" fill="black" /> {/* vertical rail from gantry */}
+    <rect x="24" y="56" width="17" height="6" rx="1" fill="black" /> {/* crossbar */}
+    {/* Gripper paddles — wide enough to grab a plate */}
+    <rect x="22" y="60" width="4" height="14" rx="1" fill="black" /> {/* left paddle */}
+    <rect x="39" y="60" width="4" height="14" rx="1" fill="black" /> {/* right paddle */}
+    {/* Deck plate 1 */}
+    <rect x="14" y="88" width="28" height="16" rx="2" stroke="black" strokeWidth="2" fill="white" />
+    {/* Plate 1 wells */}
+    <circle cx="22" cy="93" r="2" fill="black" />
+    <circle cx="28" cy="93" r="2" fill="black" />
+    <circle cx="34" cy="93" r="2" fill="black" />
+    <circle cx="22" cy="99" r="2" fill="black" />
+    <circle cx="28" cy="99" r="2" fill="black" />
+    <circle cx="34" cy="99" r="2" fill="black" />
+    {/* Deck plate 2 (under pipette) */}
+    <rect x="56" y="88" width="28" height="16" rx="2" stroke="black" strokeWidth="2" fill="white" />
+    {/* Plate 2 wells — some filled with orange (in progress) */}
+    <circle cx="64" cy="93" r="2" fill="#ff4d00" />
+    <circle cx="70" cy="93" r="2" fill="black" />
+    <circle cx="76" cy="93" r="2" fill="#ff4d00" />
+    <circle cx="64" cy="99" r="2" fill="black" />
+    <circle cx="70" cy="99" r="2" fill="black" />
+    <circle cx="76" cy="99" r="2" fill="black" />
+    {/* Status LED */}
+    <circle cx="104" cy="28" r="3" fill="#ff4d00" />
+  </svg>
+);
+
+const ProgressSlide: React.FC<PitchSlideProps> = ({ slide }) => (
+  <div className="min-h-full md:h-full flex flex-col items-center md:justify-center px-4 md:px-8 py-10 md:py-0">
+    <motion.h2
+      {...fadeUp}
+      className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-8 md:mb-14 text-center"
+    >
+      {slide.headline}
+    </motion.h2>
+    <div className="flex flex-col md:flex-row items-center gap-6 md:gap-0 max-w-[900px] w-full">
+      {slide.progressPanels?.map((panel, i) => {
+        const Svg = i === 0 ? HumanSvg : RobotSvg;
+        return (
+          <React.Fragment key={i}>
+            {i > 0 && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.3 }}
+                className="shrink-0"
+              >
+                <span className="hidden md:block text-5xl font-black text-[#ff4d00]">&rarr;</span>
+                <span className="block md:hidden text-5xl font-black text-[#ff4d00]">&darr;</span>
+              </motion.div>
+            )}
+            <motion.div
+              initial={{ opacity: 0, x: i === 0 ? -30 : 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.15 + i * 0.2 }}
+              className="flex-1 flex flex-col items-center text-center px-6"
+            >
+              <div className="mb-6">
+                <Svg />
+              </div>
+              <h3 className="text-2xl font-black uppercase mb-3 tracking-wide">{panel.label}</h3>
+              <div className="space-y-1 font-mono text-sm text-slate-700">
+                {panel.lines.map((line, j) => {
+                  const boldMatch = line.match(/^\*\*(.+)\*\*$/);
+                  return boldMatch
+                    ? <p key={j} className="font-bold text-black">{boldMatch[1]}</p>
+                    : <p key={j}>{line}</p>;
+                })}
+              </div>
+            </motion.div>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  </div>
+);
+
 const TeamSlide: React.FC<PitchSlideProps> = ({ slide }) => (
   <div className="min-h-full md:h-full flex flex-col items-center md:justify-center px-4 md:px-8 py-10 md:py-0">
     <motion.h2
@@ -389,7 +528,17 @@ const AskSlide: React.FC<PitchSlideProps> = ({ slide }) => (
           {slide.headline}
         </h2>
         {slide.subheadline && (
-          <p className="text-base font-mono text-slate-600">{slide.subheadline}</p>
+          <p className="text-base font-mono text-slate-600 mb-4">{slide.subheadline}</p>
+        )}
+        {slide.bullets && (
+          <ul className="space-y-2">
+            {slide.bullets.map((bullet, i) => (
+              <li key={i} className="flex gap-3 text-sm font-mono text-slate-800">
+                <span className="text-[#ff4d00] font-bold shrink-0">//</span>
+                <span>{bullet}</span>
+              </li>
+            ))}
+          </ul>
         )}
       </motion.div>
       <div className="flex-1 w-full">
