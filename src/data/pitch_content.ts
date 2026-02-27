@@ -134,7 +134,7 @@ export const pitchSlides: PitchSlide[] = [
       {
         number: 1,
         title: 'AI changes everything',
-        description: 'AI scientists are the future, but are bottlenecked by lab experiments. We are building a lab that allows agents to express their full power.',
+        description: 'AI scientists are the future, but are bottlenecked by lab experiments. We are building a lab that allows agents — and more importantly, the people controlling the agents — to express their full power.',
       },
       {
         number: 2,
