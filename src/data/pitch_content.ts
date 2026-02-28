@@ -168,7 +168,7 @@ export const pitchSlides: PitchSlide[] = [
     id: 'ask',
     layout: 'ask',
     headline: 'The ask',
-    subheadline: 'Raising $1.5M. We have the hardware for our first workstation. We need capital for:',
+    subheadline: 'Raising $2M. We have the hardware for our first workstation. We need capital for:',
     bullets: [
       'Materials to test and validate protocols',
       'A second workstation and backup hardware',
