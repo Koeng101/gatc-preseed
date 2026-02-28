@@ -2,11 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { memoSections } from '../data/memo_content';
 import { VisualizationPlaceholder } from './VisualizationPlaceholder';
+import { getMemoViz } from './MemoViz';
 
 export const MemoView: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const [activeViz, setActiveViz] = useState<{ id: string; label: string } | null>(null);
   const sectionRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -14,45 +16,33 @@ export const MemoView: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Find all viz IDs from sections for IntersectionObserver
+  // Scroll-based viz switching — find the last viz section above the trigger line
   useEffect(() => {
     if (isMobile) return;
+    const container = scrollRef.current;
+    if (!container) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const vizId = entry.target.getAttribute('data-viz-id');
-            const vizLabel = entry.target.getAttribute('data-viz-label');
-            if (vizId && vizLabel) {
-              setActiveViz({ id: vizId, label: vizLabel });
-            }
-          }
+    const handleScroll = () => {
+      const triggerY = container.getBoundingClientRect().top + container.clientHeight * 0.35;
+      let lastViz: { id: string; label: string } | null = null;
+
+      sectionRefs.current.forEach((el) => {
+        const vizId = el.getAttribute('data-viz-id');
+        const vizLabel = el.getAttribute('data-viz-label');
+        if (vizId && vizLabel && el.getBoundingClientRect().top < triggerY) {
+          lastViz = { id: vizId, label: vizLabel };
         }
-      },
-      { threshold: 0.3 }
-    );
+      });
 
-    sectionRefs.current.forEach((el) => {
-      if (el.getAttribute('data-viz-id')) {
-        observer.observe(el);
+      if (lastViz) {
+        setActiveViz(lastViz);
       }
-    });
+    };
 
-    return () => observer.disconnect();
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => container.removeEventListener('scroll', handleScroll);
   }, [isMobile]);
-
-  // Set initial viz
-  useEffect(() => {
-    for (const section of memoSections) {
-      for (const sub of section.subsections) {
-        if (sub.vizId && sub.vizLabel) {
-          setActiveViz({ id: sub.vizId, label: sub.vizLabel });
-          return;
-        }
-      }
-    }
-  }, []);
 
   if (isMobile) {
     return (
@@ -67,7 +57,7 @@ export const MemoView: React.FC = () => {
   return (
     <div className="flex h-full p-8 gap-8 max-w-[1800px] mx-auto overflow-hidden">
       {/* Left panel: prose */}
-      <div className="flex-[1.2] bg-[#fdfdfd] border-2 border-black shadow-hard overflow-y-auto p-12">
+      <div ref={scrollRef} className="flex-[1.2] bg-[#fdfdfd] border-2 border-black shadow-hard overflow-y-auto p-12">
         <div className="max-w-[700px] mx-auto">
           <MemoContent sectionRefs={sectionRefs} />
         </div>
@@ -93,7 +83,7 @@ export const MemoView: React.FC = () => {
               transition={{ duration: 0.3 }}
               className="w-full"
             >
-              <VisualizationPlaceholder label={activeViz.label} className="h-[300px]" />
+              {getMemoViz(activeViz.id) || <VisualizationPlaceholder label={activeViz.label} className="h-[300px]" />}
             </motion.div>
           ) : (
             <span className="font-mono text-xs text-zinc-400 uppercase">Scroll to activate</span>
@@ -172,7 +162,9 @@ const MemoContent: React.FC<{
 
                 {/* Inline viz for mobile */}
                 {inline && sub.vizId && sub.vizLabel && (
-                  <VisualizationPlaceholder label={sub.vizLabel} className="my-6" />
+                  <div className="my-6">
+                    {getMemoViz(sub.vizId) || <VisualizationPlaceholder label={sub.vizLabel} />}
+                  </div>
                 )}
               </div>
             );

@@ -47,8 +47,6 @@ export const memoSections: MemoSection[] = [
           'Ben Ray has joined as our first founding engineer. Ben led the automation team at Retro Biosciences, a large and successful longevity startup, for 3.5 years before leaving and joining Genetic Assemblies. At Retro, Ben was in charge of building and maintaining the hardware for fully automated robotic systems using used robots and clever engineering.',
           'We plan on hiring the most cracked engineers we can get our hands on. Most likely, this will be a software or hardware engineer. We do not plan on hiring many if any biologists.',
         ],
-        vizId: 'team-overview',
-        vizLabel: 'TEAM',
       },
     ],
   },

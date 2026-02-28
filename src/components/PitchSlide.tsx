@@ -400,7 +400,7 @@ const RobotSvg = () => (
     {/* Pipette assembly — outer group moves horizontally along X gantry */}
     <g style={{ animation: 'pipetteShuttleX 5s ease-in-out infinite' }}>
       {/* Vertical rail (Y gantry) */}
-      <rect x="68" y="18" width="5" height="50" rx="1" fill="black" />
+      <rect x="68" y="18" width="5" height="48" rx="1" fill="black" />
       {/* Inner group dips vertically into wells */}
       <g style={{ animation: 'pipetteShuttleY 5s ease-in-out infinite' }}>
         {/* Pipette head */}
