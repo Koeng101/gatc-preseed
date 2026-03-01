@@ -179,7 +179,7 @@ const IncubatorIcon: React.FC<{ x: number; y: number }> = ({ x, y }) => (
   </g>
 );
 
-/** Animated SCARA arm — two segments, elbow joint, gripper holding a plate */
+/** Animated SCARA arm — two segments, elbow joint, gripper picking up / dropping off plate */
 const CentralArm: React.FC<{ x: number; y: number }> = ({ x, y }) => (
   <g transform={`translate(${x},${y})`}>
     {/* Base hub */}
@@ -189,11 +189,11 @@ const CentralArm: React.FC<{ x: number; y: number }> = ({ x, y }) => (
       <animateTransform
         attributeName="transform"
         type="rotate"
-        values="180;180;230;230;310;310;360;360;540"
-        keyTimes="0;0.18;0.25;0.43;0.5;0.68;0.75;0.93;1"
-        keySplines="0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1"
+        values="90;90;180;180;230;230;310;310;360;360;450;450"
+        keyTimes="0;0.12;0.17;0.29;0.34;0.46;0.51;0.63;0.68;0.80;0.85;1"
+        keySplines="0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1"
         calcMode="spline"
-        dur="6s"
+        dur="10s"
         repeatCount="indefinite"
       />
       {/* Upper arm */}
@@ -203,28 +203,32 @@ const CentralArm: React.FC<{ x: number; y: number }> = ({ x, y }) => (
         <animateTransform
           attributeName="transform"
           type="rotate"
-          values="0;0;40;40;-40;-40;0;0;0"
-          keyTimes="0;0.18;0.25;0.43;0.5;0.68;0.75;0.93;1"
-          keySplines="0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1"
+          values="0;0;0;0;40;40;-40;-40;0;0;0;0"
+          keyTimes="0;0.12;0.17;0.29;0.34;0.46;0.51;0.63;0.68;0.80;0.85;1"
+          keySplines="0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1;0 0 1 1"
           calcMode="spline"
-          dur="6s"
+          dur="10s"
           repeatCount="indefinite"
           additive="sum"
         />
         {/* Elbow joint */}
-        <rect x="-3" y="-3" width="6" height="6" rx="1" fill="#555" />
+        <rect x="-3" y="-3" width="6" height="6" rx="1" fill="black" />
         {/* Forearm */}
         <rect x="3" y="-2" width="11" height="4" rx="1" fill="black" />
         {/* Gripper paddles */}
         <rect x="13" y="-6" width="3" height="3" rx="1" fill="black" />
         <rect x="13" y="3" width="3" height="3" rx="1" fill="black" />
-        {/* Plate */}
-        <rect x="15" y="-4.5" width="14" height="9" rx="2" stroke="black" strokeWidth="1.5" fill="white" />
-        {/* Wells (2×2) */}
-        <circle cx="19" cy="-1.5" r="1.5" fill="#ff4d00" />
-        <circle cx="24" cy="-1.5" r="1.5" fill="black" />
-        <circle cx="19" cy="1.5" r="1.5" fill="black" />
-        <circle cx="24" cy="1.5" r="1.5" fill="#ff4d00" />
+        {/* Plate + wells (visible only while carrying) */}
+        <g>
+          <animate attributeName="opacity" values="0;1;0"
+            keyTimes="0;0.12;0.86" calcMode="discrete" dur="10s" repeatCount="indefinite" />
+
+          <rect x="15" y="-4.5" width="14" height="9" rx="2" stroke="black" strokeWidth="1.5" fill="white" />
+          <circle cx="19" cy="-1.5" r="1.5" fill="#ff4d00" />
+          <circle cx="24" cy="-1.5" r="1.5" fill="black" />
+          <circle cx="19" cy="1.5" r="1.5" fill="black" />
+          <circle cx="24" cy="1.5" r="1.5" fill="#ff4d00" />
+        </g>
       </g>
     </g>
   </g>
@@ -343,6 +347,7 @@ const GaWorkflowViz: React.FC = () => {
         const botR = by + 145;   // bottom equipment row
         const armCy = botR;      // arm sits at bottom row, between centrifuge & incubator
         const lblOff = 20;       // label offset below icon center
+        const railY = armCy + 45;
         return (
           <>
             {/* Top equipment (in arm range) */}
@@ -356,15 +361,39 @@ const GaWorkflowViz: React.FC = () => {
             <IncubatorIcon x={rx} y={botR} />
             <text x={rx} y={botR + lblOff} textAnchor="middle" style={{ ...sub, fontSize: '7px' }} fill="#555">incubator</text>
 
-            {/* Central animated robot arm */}
-            <CentralArm x={rightCx} y={armCy} />
-
             {/* Title */}
-            <text x={rightCx} y={by + 200} textAnchor="middle" style={{ ...label, fontSize: '10px' }} fill="black">AUTOMATED</text>
-            <text x={rightCx} y={by + 214} textAnchor="middle" style={{ ...label, fontSize: '10px' }} fill="black">LAB</text>
-            <text x={rightCx} y={by + 231} textAnchor="middle" style={{ ...sub, fontSize: '9px' }} fill="#555">robots execute</text>
+            <text x={rightCx} y={by + 250} textAnchor="middle" style={{ ...label, fontSize: '10px' }} fill="black">AUTOMATED</text>
+            <text x={rightCx} y={by + 264} textAnchor="middle" style={{ ...label, fontSize: '10px' }} fill="black">LAB</text>
+            <text x={rightCx} y={by + 281} textAnchor="middle" style={{ ...sub, fontSize: '9px' }} fill="#555">robots execute</text>
 
-            {/* ─── Rail space (y ≈ 250–310) — reserved for future rail ─── */}
+            {/* Transport rail — train track */}
+            <line x1={G.RIGHT_X + 15} y1={railY - 3} x2={G.RIGHT_X + G.RIGHT_W - 15} y2={railY - 3}
+              stroke="black" strokeWidth="1.5" />
+            <line x1={G.RIGHT_X + 15} y1={railY + 3} x2={G.RIGHT_X + G.RIGHT_W - 15} y2={railY + 3}
+              stroke="black" strokeWidth="1.5" />
+            {/* Rail plate (slides in, picked up, dropped off, slides out) */}
+            <g>
+              <animateTransform
+                attributeName="transform"
+                type="translate"
+                values={`${G.RIGHT_X + 15} ${railY};${rightCx} ${railY};${rightCx} ${railY};${G.RIGHT_X + G.RIGHT_W - 15} ${railY}`}
+                keyTimes="0;0.10;0.86;1"
+                keySplines="0.25 0.1 0.25 1;0 0 1 1;0.25 0.1 0.25 1"
+                calcMode="spline"
+                dur="10s"
+                repeatCount="indefinite"
+              />
+              <animate attributeName="opacity" values="1;0;1"
+                keyTimes="0;0.12;0.86" calcMode="discrete" dur="10s" repeatCount="indefinite" />
+              <rect x="-4.5" y="-7" width="9" height="14" rx="2" stroke="black" strokeWidth="1.5" fill="white" />
+              <circle cx="-1.5" cy="-3" r="1.5" fill="black" />
+              <circle cx="1.5" cy="-3" r="1.5" fill="#ff4d00" />
+              <circle cx="-1.5" cy="3" r="1.5" fill="#ff4d00" />
+              <circle cx="1.5" cy="3" r="1.5" fill="black" />
+            </g>
+
+            {/* Central animated robot arm (after rail so it renders on top) */}
+            <CentralArm x={rightCx} y={armCy} />
           </>
         );
       })()}
