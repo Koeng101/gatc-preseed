@@ -1,11 +1,38 @@
 import { useState, useEffect, useRef } from 'react';
 import { pitchSlides } from '../data/pitch_content';
 import { PitchSlide } from './PitchSlide';
+import { replaceSection } from '../hooks/useHashTab';
 
-export const PitchDeck: React.FC = () => {
+interface PitchDeckProps {
+  section?: string | null;
+}
+
+export const PitchDeck: React.FC<PitchDeckProps> = ({ section }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+  const initialScrollDone = useRef(false);
+
+  // Scroll to section on mount, or back to top when section clears (logo click)
+  useEffect(() => {
+    if (!section) {
+      if (initialScrollDone.current) {
+        // Section cleared (e.g. logo click) — scroll back to first slide
+        const el = slideRefs.current.get(0);
+        el?.scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
+    if (initialScrollDone.current) return;
+    const idx = pitchSlides.findIndex(s => s.id === section);
+    if (idx >= 0) {
+      requestAnimationFrame(() => {
+        const el = slideRefs.current.get(idx);
+        el?.scrollIntoView();
+        initialScrollDone.current = true;
+      });
+    }
+  }, [section]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -15,6 +42,7 @@ export const PitchDeck: React.FC = () => {
             const index = Number(entry.target.getAttribute('data-slide-index'));
             if (!isNaN(index)) {
               setActiveIndex(index);
+              replaceSection(index === 0 ? null : pitchSlides[index].id);
             }
           }
         }

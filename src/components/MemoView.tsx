@@ -3,8 +3,13 @@ import { motion } from 'framer-motion';
 import { memoSections } from '../data/memo_content';
 import { VisualizationPlaceholder } from './VisualizationPlaceholder';
 import { getMemoViz } from './MemoViz';
+import { replaceSection } from '../hooks/useHashTab';
 
-export const MemoView: React.FC = () => {
+interface MemoViewProps {
+  section?: string | null;
+}
+
+export const MemoView: React.FC<MemoViewProps> = ({ section }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const [activeViz, setActiveViz] = useState<{ id: string; label: string } | null>(null);
   const sectionRefs = useRef<Map<string, HTMLDivElement>>(new Map());
@@ -16,32 +21,64 @@ export const MemoView: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Scroll-based viz switching — find the last viz section above the trigger line
+  // Scroll to section on mount
+  const initialScrollDone = useRef(false);
   useEffect(() => {
-    if (isMobile) return;
-    const container = scrollRef.current;
-    if (!container) return;
+    if (initialScrollDone.current || !section) return;
+    requestAnimationFrame(() => {
+      const el = document.getElementById(section);
+      if (el) {
+        el.scrollIntoView();
+        initialScrollDone.current = true;
+      }
+    });
+  }, [section]);
+
+  // Scroll-based viz switching + section URL sync
+  useEffect(() => {
+    const container = isMobile ? null : scrollRef.current;
+    const scrollTarget = container || document.querySelector('.h-full.overflow-y-auto') as HTMLElement;
+    if (!scrollTarget) return;
 
     const handleScroll = () => {
-      const triggerY = container.getBoundingClientRect().top + container.clientHeight * 0.35;
-      let lastViz: { id: string; label: string } | null = null;
+      // Viz switching (desktop only)
+      if (!isMobile && container) {
+        const triggerY = container.getBoundingClientRect().top + container.clientHeight * 0.35;
+        let lastViz: { id: string; label: string } | null = null;
 
-      sectionRefs.current.forEach((el) => {
-        const vizId = el.getAttribute('data-viz-id');
-        const vizLabel = el.getAttribute('data-viz-label');
-        if (vizId && vizLabel && el.getBoundingClientRect().top < triggerY) {
-          lastViz = { id: vizId, label: vizLabel };
+        sectionRefs.current.forEach((el) => {
+          const vizId = el.getAttribute('data-viz-id');
+          const vizLabel = el.getAttribute('data-viz-label');
+          if (vizId && vizLabel && el.getBoundingClientRect().top < triggerY) {
+            lastViz = { id: vizId, label: vizLabel };
+          }
+        });
+
+        if (lastViz) {
+          setActiveViz(lastViz);
         }
-      });
+      }
 
-      if (lastViz) {
-        setActiveViz(lastViz);
+      // Section URL sync
+      const viewportMid = window.innerHeight / 2;
+      let visibleSection: string | null = null;
+      for (const sec of memoSections) {
+        const el = document.getElementById(sec.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < viewportMid && rect.bottom > 0) {
+            visibleSection = sec.id;
+          }
+        }
+      }
+      if (visibleSection) {
+        replaceSection(visibleSection === memoSections[0].id ? null : visibleSection);
       }
     };
 
-    container.addEventListener('scroll', handleScroll, { passive: true });
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => container.removeEventListener('scroll', handleScroll);
+    return () => scrollTarget.removeEventListener('scroll', handleScroll);
   }, [isMobile]);
 
   if (isMobile) {
@@ -114,63 +151,68 @@ const MemoContent: React.FC<{
         </h1>
       </motion.div>
 
-      {memoSections.map((section, i) => (
-        <div key={section.id} className="mb-12">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 + i * 0.04 }}
-            className="text-3xl font-black text-black mb-6 uppercase border-b-4 border-black pb-2"
-          >
-            {section.title}
-          </motion.h2>
+      {(() => {
+        const renderedVizIds = new Set<string>();
+        return memoSections.map((section, i) => (
+          <div key={section.id} id={section.id} className="mb-12">
+            <motion.h2
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 + i * 0.04 }}
+              className="text-3xl font-black text-black mb-6 uppercase border-b-4 border-black pb-2"
+            >
+              {section.title}
+            </motion.h2>
 
-          {section.subsections.map((sub, j) => {
-            const refKey = `${section.id}-${j}`;
-            return (
-              <div
-                key={j}
-                ref={(el) => {
-                  if (el) sectionRefs.current.set(refKey, el);
-                }}
-                data-viz-id={sub.vizId || undefined}
-                data-viz-label={sub.vizLabel || undefined}
-                className="mb-8"
-              >
-                {sub.heading && (
-                  <h3 className="text-lg font-black text-black mb-3 uppercase">
-                    {sub.heading}
-                  </h3>
-                )}
+            {section.subsections.map((sub, j) => {
+              const refKey = `${section.id}-${j}`;
+              const showInlineViz = inline && sub.vizId && sub.vizLabel && !renderedVizIds.has(sub.vizId);
+              if (inline && sub.vizId) renderedVizIds.add(sub.vizId);
+              return (
+                <div
+                  key={j}
+                  ref={(el) => {
+                    if (el) sectionRefs.current.set(refKey, el);
+                  }}
+                  data-viz-id={sub.vizId || undefined}
+                  data-viz-label={sub.vizLabel || undefined}
+                  className="mb-8"
+                >
+                  {/* Inline viz for mobile — rendered above text */}
+                  {showInlineViz && (
+                    <div className="mb-6">
+                      {getMemoViz(sub.vizId!) || <VisualizationPlaceholder label={sub.vizLabel!} />}
+                    </div>
+                  )}
 
-                {sub.paragraphs.map((p, k) => (
-                  <p key={k} className="text-base leading-relaxed text-slate-800 font-mono mb-4">
-                    {p}
-                  </p>
-                ))}
+                  {sub.heading && (
+                    <h3 className="text-lg font-black text-black mb-3 uppercase">
+                      {sub.heading}
+                    </h3>
+                  )}
 
-                {sub.bullets && (
-                  <ul className="space-y-2 mb-4 ml-4">
-                    {sub.bullets.map((bullet, k) => (
-                      <li key={k} className="flex gap-3 text-sm font-mono text-slate-800">
-                        <span className="text-[#ff4d00] font-bold shrink-0">//</span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                  {sub.paragraphs.map((p, k) => (
+                    <p key={k} className="text-base leading-relaxed text-slate-800 font-mono mb-4">
+                      {p}
+                    </p>
+                  ))}
 
-                {/* Inline viz for mobile */}
-                {inline && sub.vizId && sub.vizLabel && (
-                  <div className="my-6">
-                    {getMemoViz(sub.vizId) || <VisualizationPlaceholder label={sub.vizLabel} />}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      ))}
+                  {sub.bullets && (
+                    <ul className="space-y-2 mb-4 ml-4">
+                      {sub.bullets.map((bullet, k) => (
+                        <li key={k} className="flex gap-3 text-sm font-mono text-slate-800">
+                          <span className="text-[#ff4d00] font-bold shrink-0">//</span>
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ));
+      })()}
     </>
   );
 };

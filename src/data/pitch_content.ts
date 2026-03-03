@@ -1,6 +1,6 @@
 export interface PitchSlide {
   id: string;
-  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'strategy' | 'progress' | 'team' | 'ask' | 'placeholder';
+  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'economics' | 'market-selection' | 'strategy' | 'progress' | 'team' | 'ask' | 'visit' | 'placeholder';
   headline: string;
   subheadline?: string;
   bullets?: string[];
@@ -13,6 +13,14 @@ export interface PitchSlide {
   vizId?: string;
   vizLabel?: string;
   vizImage?: string;
+  economicsData?: {
+    unitsPerDay: number;
+    pricePerUnit: number;
+    costPerUnit: number;
+    daysPerWeek: number;
+    weeksPerYear: number;
+    monthlyBurn: number;
+  };
 }
 
 export const pitchSlides: PitchSlide[] = [
@@ -150,13 +158,56 @@ export const pitchSlides: PitchSlide[] = [
     ],
   },
   {
+    id: 'economics',
+    layout: 'economics',
+    headline: 'Economics',
+    subheadline: 'DNA assembly: our beachhead service.',
+    steps: [
+      {
+        number: 1,
+        title: 'Build trust in automation',
+        description: 'Basic service that proves our systems work — earns repeat customers.',
+      },
+      {
+        number: 2,
+        title: 'Great labor arbitrage',
+        description: 'DNA assembly is very labor intensive. Automating it creates a huge cost advantage.',
+      },
+      {
+        number: 3,
+        title: 'We\'re uniquely good at it',
+        description: 'Keoni\'s years of hands-on experience in DNA assembly combine with Ben\'s years of expertise in building fully automated workstations.',
+      },
+    ],
+    footnote: 'We\'ve proven demand doing things that don\'t scale — fulfilling orders by hand. That\'s exactly why we haven\'t scaled: this process is brutally labor intensive.',
+    economicsData: {
+      unitsPerDay: 192,
+      pricePerUnit: 50,
+      costPerUnit: 15,
+      daysPerWeek: 7,
+      weeksPerYear: 50,
+      monthlyBurn: 25000,
+    },
+  },
+  {
+    id: 'market-selection',
+    layout: 'market-selection',
+    headline: 'How we choose services to offer',
+    subheadline: 'Full automation is disruptively better than partial automation.',
+    bullets: [
+      'Minimize human labor',
+      'Keep the robots running',
+      'Use commodity inputs',
+    ],
+  },
+  {
     id: 'progress',
     layout: 'progress',
     headline: 'Progress',
     progressPanels: [
       {
         label: 'Now',
-        lines: ['$22k in 3 months (it\'s hard!)', '1 person fulfilling orders manually', 'Validated demand, learned customer needs'],
+        lines: ['$22k revenue in 3 months (it\'s hard!)', '1 person fulfilling orders manually', 'Validated demand, learned customer needs'],
       },
       {
         label: 'Next',
@@ -176,7 +227,7 @@ export const pitchSlides: PitchSlide[] = [
     ],
     milestones: [
       { month: 3, title: 'Automated workstation', description: 'One fully functioning automated workstation. All services and protocols will be developed using this workstation, with the absolute minimum human intervention.' },
-      { month: 6, title: 'Public launch', description: 'Public launch of DNA assembly services (~96 plasmids/week)*.' },
+      { month: 6, title: 'Public launch', description: 'Public launch of DNA assembly services.' },
       { month: 12, title: 'Profitability', description: 'We aim for profitability before next raise with our basic services.' },
     ],
     footnote: '* We\'ll continue serving customers before public launch, just more selectively. More workstations will come online as we need them.',
@@ -197,5 +248,12 @@ export const pitchSlides: PitchSlide[] = [
         bio: 'Led the automation team at Retro Biosciences for 3.5 years. Built and maintained hardware for fully automated robotic systems using used robots and clever engineering.',
       },
     ],
+  },
+  {
+    id: 'visit',
+    layout: 'visit',
+    headline: 'Come visit',
+    subheadline: 'Visit our warehouse in Burlingame, CA. 20min south of SF.\nSee our workstations come together in real life.',
+    vizImage: 'lab.jpg',
   },
 ];

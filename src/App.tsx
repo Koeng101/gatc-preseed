@@ -1,13 +1,13 @@
-import { useState } from 'react'
 import { GaIcon } from './components/GaIcon'
-import { TabNav, type TabId } from './components/TabNav'
+import { TabNav } from './components/TabNav'
+import { useHashTab } from './hooks/useHashTab'
 import { PitchDeck } from './components/PitchDeck'
 import { MemoView } from './components/MemoView'
 import { EssayView } from './components/EssayView'
 import { essay01, essay02, essay03 } from './data/essay_content'
 
 function App() {
-  const [activeTab, setActiveTab] = useState<TabId>('deck')
+  const [activeTab, setActiveTab, section] = useHashTab()
 
   return (
     <div className="h-screen w-full relative bg-[#f2f0e9] text-black font-mono overflow-hidden flex flex-col md:flex-row">
@@ -37,11 +37,11 @@ function App() {
 
       {/* Main Viewport */}
       <main className="flex-1 min-h-0 relative z-0">
-         {activeTab === 'deck' && <PitchDeck />}
-         {activeTab === 'memo' && <MemoView />}
-         {activeTab === 'essay_01' && <EssayView essay={essay01} />}
-         {activeTab === 'essay_02' && <EssayView essay={essay02} />}
-         {activeTab === 'essay_03' && <EssayView essay={essay03} />}
+         {activeTab === 'deck' && <PitchDeck section={section} />}
+         {activeTab === 'memo' && <MemoView section={section} />}
+         {activeTab === 'essay_01' && <EssayView essay={essay01} section={section} />}
+         {activeTab === 'essay_02' && <EssayView essay={essay02} section={section} />}
+         {activeTab === 'essay_03' && <EssayView essay={essay03} section={section} />}
       </main>
     </div>
   )

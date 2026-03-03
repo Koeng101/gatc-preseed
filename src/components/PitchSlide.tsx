@@ -6,10 +6,12 @@ import { GaIcon } from './GaIcon';
 import plateGif from '../assets/plate0_magsep.gif';
 import problemImg from '../assets/problem.png';
 import solutionImg from '../assets/solution.png';
+import labImg from '../assets/lab.jpg';
 
 const vizImages: Record<string, string> = {
   'problem.png': problemImg,
   'solution.png': solutionImg,
+  'lab.jpg': labImg,
 };
 
 interface PitchSlideProps {
@@ -35,6 +37,10 @@ export const PitchSlide: React.FC<PitchSlideProps> = ({ slide }) => {
       return <StepsSlide slide={slide} />;
     case 'insights':
       return <InsightsSlide slide={slide} />;
+    case 'economics':
+      return <EconomicsSlide slide={slide} />;
+    case 'market-selection':
+      return <MarketSelectionSlide slide={slide} />;
     case 'strategy':
       return <StrategySlide slide={slide} />;
     case 'progress':
@@ -43,6 +49,8 @@ export const PitchSlide: React.FC<PitchSlideProps> = ({ slide }) => {
       return <TeamSlide slide={slide} />;
     case 'ask':
       return <AskSlide slide={slide} />;
+    case 'visit':
+      return <VisitSlide slide={slide} />;
     case 'placeholder':
       return <PlaceholderSlide slide={slide} />;
     default:
@@ -255,6 +263,250 @@ const InsightsSlide: React.FC<PitchSlideProps> = ({ slide }) => (
   </div>
 );
 
+const EconInput: React.FC<{
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  prefix?: string;
+}> = ({ label, value, onChange, prefix }) => (
+  <label className="flex flex-col gap-1">
+    <span className="text-[10px] font-bold uppercase text-slate-400">{label}</span>
+    <div className="flex items-center border-2 border-black bg-white">
+      {prefix && <span className="pl-2 font-mono text-sm text-slate-400">{prefix}</span>}
+      <input
+        type="number"
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value) || 0)}
+        className="w-full px-2 py-1.5 font-mono text-sm font-bold bg-transparent outline-none"
+      />
+    </div>
+  </label>
+);
+
+const EconomicsSlide: React.FC<PitchSlideProps> = ({ slide }) => {
+  const d = slide.economicsData;
+  if (!d) return null;
+
+  const [workstations, setWorkstations] = React.useState(1);
+  const [unitsPerDay, setUnitsPerDay] = React.useState(d.unitsPerDay);
+  const [pricePerUnit, setPricePerUnit] = React.useState(d.pricePerUnit);
+  const [costPerUnit, setCostPerUnit] = React.useState(d.costPerUnit);
+
+  const fmt = (n: number) => '$' + n.toLocaleString();
+  const ws = workstations || 1;
+
+  const dailyRevenue = unitsPerDay * pricePerUnit * ws;
+  const dailyCost = unitsPerDay * costPerUnit * ws;
+  const dailyMargin = dailyRevenue - dailyCost;
+
+  const weeklyRevenue = dailyRevenue * d.daysPerWeek;
+  const weeklyCost = dailyCost * d.daysPerWeek;
+  const weeklyMargin = weeklyRevenue - weeklyCost;
+
+  const annualRevenue = weeklyRevenue * d.weeksPerYear;
+  const annualMaterials = weeklyCost * d.weeksPerYear;
+  const annualBurn = d.monthlyBurn * 12;
+  const annualProfit = annualRevenue - annualMaterials - annualBurn;
+
+  const marginPerUnit = pricePerUnit - costPerUnit;
+  const monthlyCapacity = unitsPerDay * ws * d.daysPerWeek * d.weeksPerYear / 12;
+  const breakevenUnits = marginPerUnit > 0 ? d.monthlyBurn / marginPerUnit : Infinity;
+  const breakevenPct = monthlyCapacity > 0 ? breakevenUnits / monthlyCapacity : Infinity;
+  const breakevenLabel = breakevenPct <= 1
+    ? `~1/${Math.round(1 / breakevenPct)}`
+    : '>100%';
+
+  return (
+    <div className="min-h-full md:h-full flex flex-col items-center md:justify-center px-4 md:px-8 py-10 md:py-0">
+      <motion.h2
+        {...fadeUp}
+        className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-8 md:mb-14 text-center"
+      >
+        {slide.headline}
+      </motion.h2>
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 max-w-[1100px] w-full items-start">
+        {/* Left: Why DNA assembly */}
+        <motion.div {...fadeUp} className="flex-1">
+          {slide.subheadline && (
+            <p className="text-base font-mono text-slate-600 mb-6">{slide.subheadline}</p>
+          )}
+          <h3 className="text-lg md:text-xl font-black uppercase mb-5">
+            Why DNA assembly?
+          </h3>
+          <div className="space-y-5">
+            {slide.steps?.map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.2 + i * 0.1 }}
+                className="flex gap-3"
+              >
+                <div className="w-8 h-8 bg-[#ff4d00] text-white flex items-center justify-center font-black text-sm shrink-0 border-2 border-black">
+                  {step.number}
+                </div>
+                <div>
+                  <h4 className="font-black uppercase text-sm">{step.title}</h4>
+                  <p className="text-xs font-mono text-slate-600 leading-relaxed">{step.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          {slide.footnote && (
+            <p className="text-[11px] font-mono text-slate-400 mt-6 leading-relaxed">
+              *{slide.footnote}
+            </p>
+          )}
+        </motion.div>
+
+        {/* Right: Economics calculation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="flex-1 border-2 border-black bg-white shadow-hard"
+        >
+          <div className="bg-black text-white px-6 py-3 flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setWorkstations(Math.max(1, workstations - 1))}
+                className="w-7 h-7 bg-white text-black font-black text-sm flex items-center justify-center"
+              >
+                -
+              </button>
+              <span className="font-mono font-bold text-lg w-6 text-center">{ws}</span>
+              <button
+                onClick={() => setWorkstations(workstations + 1)}
+                className="w-7 h-7 bg-white text-black font-black text-sm flex items-center justify-center"
+              >
+                +
+              </button>
+            </div>
+            <h3 className="font-black uppercase text-lg tracking-wide">
+              Workstation{ws !== 1 ? 's' : ''}
+            </h3>
+          </div>
+          {/* Inputs */}
+          <div className="px-6 pt-5 pb-3 grid grid-cols-3 gap-3">
+            <EconInput label="Plasmids/day" value={unitsPerDay} onChange={setUnitsPerDay} />
+            <EconInput label="Sell price" value={pricePerUnit} onChange={setPricePerUnit} prefix="$" />
+            <EconInput label="Material cost" value={costPerUnit} onChange={setCostPerUnit} prefix="$" />
+          </div>
+          {/* Calculation */}
+          <div className="px-6 pb-5 font-mono text-sm space-y-4">
+            {/* Per day */}
+            <div>
+              <div className="text-slate-500 text-xs">
+                {unitsPerDay} plasmids &times; ${pricePerUnit}{ws > 1 ? ` \u00d7 ${ws} ws` : ''}
+              </div>
+              <div className="text-lg font-bold">{fmt(dailyRevenue)}/day</div>
+              <div className="text-xs text-slate-400">
+                &minus; {fmt(dailyCost)} materials = <span className="text-slate-700 font-bold">{fmt(dailyMargin)}/day margin</span>
+              </div>
+            </div>
+            {/* Per week */}
+            <div className="border-t border-slate-200 pt-3">
+              <div className="text-slate-500 text-xs">&times; {d.daysPerWeek} days/week</div>
+              <div className="text-xl font-bold">{fmt(weeklyRevenue)}/week</div>
+              <div className="text-xs text-slate-400">
+                &minus; {fmt(weeklyCost)} materials = <span className="text-[#ff4d00] font-bold">{fmt(weeklyMargin)}/week margin</span>
+              </div>
+            </div>
+            {/* Per year */}
+            <div className="border-t border-slate-200 pt-3">
+              <div className="text-slate-500 text-xs">&times; {d.weeksPerYear} weeks/year</div>
+              <div className="text-xl font-bold">{fmt(annualRevenue)}/year</div>
+              <div className="text-xs text-slate-400 space-y-0.5">
+                <div>&minus; {fmt(annualMaterials)} materials</div>
+                <div>&minus; {fmt(annualBurn)} base burn (${(d.monthlyBurn / 1000).toFixed(0)}k/mo)</div>
+              </div>
+            </div>
+            {/* Net profit */}
+            <div className="border-t-2 border-black pt-4">
+              <div className="text-[10px] font-bold uppercase text-slate-400 mb-1">Net profit at full capacity</div>
+              <div className="text-2xl font-bold text-[#ff4d00]">
+                {fmt(annualProfit)}/year
+              </div>
+            </div>
+            {/* Breakeven */}
+            <div className="bg-[#ff4d00] text-white px-3 py-2 -mx-3 -mb-2 flex justify-between font-bold text-sm">
+              <span>Breakeven</span>
+              <span>{breakevenLabel} capacity</span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+    </div>
+  );
+};
+
+const MarketSelectionSlide: React.FC<PitchSlideProps> = ({ slide }) => (
+  <div className="min-h-full md:h-full flex flex-col items-center md:justify-center px-4 md:px-8 py-10 md:py-0">
+    <motion.h2
+      {...fadeUp}
+      className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-10 md:mb-16 text-center"
+    >
+      {slide.headline}
+    </motion.h2>
+    {/* Equation */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: 0.2 }}
+      className="flex items-center justify-center gap-5 md:gap-8 flex-wrap mb-12 md:mb-16"
+    >
+      <div className="border-2 border-black bg-white shadow-hard px-8 py-6 text-center">
+        <svg width="64" height="64" viewBox="0 0 36 36" fill="none" className="mx-auto mb-3">
+          <rect x="6" y="4" width="24" height="18" rx="2" stroke="black" strokeWidth="2" fill="white" />
+          <rect x="11" y="9" width="4" height="4" rx="1" fill="black" />
+          <rect x="21" y="9" width="4" height="4" rx="1" fill="black" />
+          <rect x="14" y="15" width="8" height="2" rx="1" fill="black" />
+          <rect x="10" y="24" width="16" height="4" rx="1" fill="black" />
+          <rect x="4" y="25" width="6" height="2" rx="1" fill="#ff4d00" />
+          <rect x="26" y="25" width="6" height="2" rx="1" fill="#ff4d00" />
+          <rect x="13" y="28" width="4" height="4" rx="1" fill="black" />
+          <rect x="19" y="28" width="4" height="4" rx="1" fill="black" />
+        </svg>
+        <div className="font-black uppercase text-base md:text-lg">Robot labor</div>
+        <div className="text-xs font-mono text-slate-400">*minimal human input</div>
+      </div>
+      <span className="text-4xl md:text-5xl font-black text-black">+</span>
+      <div className="border-2 border-black bg-white shadow-hard px-8 py-6 text-center">
+        <svg width="64" height="64" viewBox="0 0 36 36" fill="none" className="mx-auto mb-3">
+          <rect x="8" y="6" width="20" height="24" rx="2" stroke="black" strokeWidth="2" fill="white" />
+          <circle cx="14" cy="14" r="3" fill="#ff4d00" />
+          <circle cx="22" cy="14" r="3" fill="#ff4d00" />
+          <circle cx="14" cy="22" r="3" fill="#ff4d00" />
+          <circle cx="22" cy="22" r="3" fill="#ff4d00" />
+          <line x1="4" y1="33" x2="32" y2="33" stroke="black" strokeWidth="2" />
+        </svg>
+        <div className="font-black uppercase text-base md:text-lg">Low material cost</div>
+        <div className="text-xs font-mono text-slate-400">commodity inputs</div>
+      </div>
+      <span className="text-4xl md:text-5xl font-black text-black">=</span>
+      <div className="border-2 border-black bg-[#ff4d00] shadow-hard px-8 py-6 text-center text-white">
+        <div className="text-5xl md:text-6xl font-black mb-1">$</div>
+        <div className="font-black uppercase text-base md:text-lg">Profit</div>
+      </div>
+    </motion.div>
+    {/* Thesis */}
+    <motion.p
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: 0.4 }}
+      className="max-w-[750px] text-center font-mono text-base md:text-lg text-slate-700 leading-relaxed"
+    >
+      <span className="font-bold text-[#ff4d00]">Our thesis: </span>
+      With effective robots and commodity materials, so long as we optimize the process for minimal human intervention, we can win a given biotechnology service market.
+    </motion.p>
+  </div>
+);
+
 type PyToken = { text: string; color: string };
 
 function highlightPython(line: string): PyToken[] {
@@ -355,7 +607,7 @@ const StrategySlide: React.FC<PitchSlideProps> = ({ slide }) => (
 );
 
 const HumanSvg = () => (
-  <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="180" height="180" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
     {/* Enclosure / room box */}
     <rect x="5" y="10" width="110" height="100" rx="3" stroke="black" strokeWidth="4" fill="white" />
     {/* Head */}
@@ -392,7 +644,7 @@ const HumanSvg = () => (
 );
 
 const RobotSvg = () => (
-  <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="180" height="180" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
     {/* Enclosure frame */}
     <rect x="5" y="10" width="110" height="100" rx="3" stroke="black" strokeWidth="4" fill="white" />
     {/* Top rail (X gantry) */}
@@ -473,8 +725,8 @@ const ProgressSlide: React.FC<PitchSlideProps> = ({ slide }) => (
               <div className="mb-6">
                 <Svg />
               </div>
-              <h3 className="text-2xl font-black uppercase mb-3 tracking-wide">{panel.label}</h3>
-              <div className="space-y-1 font-mono text-sm text-slate-700">
+              <h3 className="text-3xl font-black uppercase mb-3 tracking-wide">{panel.label}</h3>
+              <div className="space-y-1 font-mono text-base text-slate-700">
                 {panel.lines.map((line, j) => {
                   const boldMatch = line.match(/^\*\*(.+)\*\*$/);
                   return boldMatch
@@ -584,6 +836,36 @@ const AskSlide: React.FC<PitchSlideProps> = ({ slide }) => (
         )}
       </div>
     </div>
+  </div>
+);
+
+const VisitSlide: React.FC<PitchSlideProps> = ({ slide }) => (
+  <div className="min-h-full md:h-full flex flex-col items-center md:justify-center px-4 md:px-8 py-10 md:py-0">
+    <motion.h2
+      {...fadeUp}
+      className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-4 text-center"
+    >
+      {slide.headline}
+    </motion.h2>
+    {slide.subheadline && (
+      <motion.p
+        {...fadeUp}
+        className="text-base font-mono text-slate-600 mb-8 text-center whitespace-pre-line"
+      >
+        {slide.subheadline}
+      </motion.p>
+    )}
+    {slide.vizImage && (
+      <motion.img
+        src={vizImages[slide.vizImage]}
+        alt={slide.headline}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="max-w-[900px] w-full border-2 border-black shadow-hard"
+      />
+    )}
   </div>
 );
 
