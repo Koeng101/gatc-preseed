@@ -47,8 +47,6 @@ export const PitchSlide: React.FC<PitchSlideProps> = ({ slide }) => {
       return <ProgressSlide slide={slide} />;
     case 'team':
       return <TeamSlide slide={slide} />;
-    case 'ask':
-      return <AskSlide slide={slide} />;
     case 'visit':
       return <VisitSlide slide={slide} />;
     case 'placeholder':
@@ -768,73 +766,6 @@ const TeamSlide: React.FC<PitchSlideProps> = ({ slide }) => (
           <p className="text-sm font-mono text-slate-700 leading-relaxed">{member.bio}</p>
         </motion.div>
       ))}
-    </div>
-  </div>
-);
-
-const AskSlide: React.FC<PitchSlideProps> = ({ slide }) => (
-  <div className="min-h-full md:h-full flex items-center px-4 md:px-8 py-10 md:py-0">
-    <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 max-w-[1200px] mx-auto w-full items-start">
-      <motion.div {...fadeUp} className="flex-1 lg:sticky lg:top-1/3">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black leading-[0.95] uppercase mb-4">
-          {slide.headline}
-        </h2>
-        {slide.subheadline && (
-          <p className="text-base font-mono text-slate-600 mb-4">{slide.subheadline}</p>
-        )}
-        {slide.bullets && (
-          <ul className="space-y-2">
-            {slide.bullets.map((bullet, i) => (
-              <li key={i} className="flex gap-3 text-sm font-mono text-slate-800">
-                <span className="text-[#ff4d00] font-bold shrink-0">//</span>
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </motion.div>
-      <div className="flex-1 w-full">
-        <div className="flex flex-col">
-          {slide.milestones?.map((milestone, i, arr) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.15 + i * 0.12 }}
-              className="flex gap-3 md:gap-4"
-            >
-              {/* Month label */}
-              <div className="w-10 md:w-12 shrink-0 pt-4 text-right">
-                <span className="text-xs font-mono font-bold text-[#ff4d00]">{milestone.month}mo</span>
-              </div>
-              {/* Dot + line segment */}
-              <div className="flex flex-col items-center shrink-0 w-3 md:w-4">
-                <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#ff4d00] mt-4 shrink-0" />
-                {i < arr.length - 1 && <div className="flex-1 w-0.5 bg-[#ff4d00]" />}
-              </div>
-              {/* Card */}
-              <div className="flex-1 pb-6">
-                <div className="border-2 border-black bg-white shadow-hard p-4">
-                  <h3 className="text-lg font-black uppercase mb-1">{milestone.title}</h3>
-                  <p className="text-sm font-mono text-slate-700">{milestone.description}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-        {slide.footnote && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.6 }}
-            className="mt-4 text-xs font-mono text-slate-500 pl-14 md:pl-16"
-          >
-            {slide.footnote}
-          </motion.p>
-        )}
-      </div>
     </div>
   </div>
 );

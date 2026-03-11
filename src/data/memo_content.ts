@@ -150,25 +150,4 @@ export const memoSections: MemoSection[] = [
       },
     ],
   },
-  {
-    id: 'raise',
-    title: 'Our raise',
-    subsections: [
-      {
-        paragraphs: [
-          'We are raising $2M to fund capex and operations for 18 months. We hope to hit the following milestones:',
-        ],
-        bullets: [
-          'Public launch of DNA assembly services (delivering ~96 plasmids per week)',
-          'Grow from 3 to 20 customers',
-          'One fully functioning automated workstation (pipette, thermocycle, incubate — static and shaking, plate read, centrifuge, 4°C storage)',
-        ],
-      },
-      {
-        paragraphs: [
-          'If you need more details, talk to us.',
-        ],
-      },
-    ],
-  },
 ];

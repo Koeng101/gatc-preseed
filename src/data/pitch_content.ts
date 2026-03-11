@@ -1,6 +1,6 @@
 export interface PitchSlide {
   id: string;
-  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'economics' | 'market-selection' | 'strategy' | 'progress' | 'team' | 'ask' | 'visit' | 'placeholder';
+  layout: 'hook' | 'bullets' | 'visualization' | 'steps' | 'insights' | 'economics' | 'market-selection' | 'strategy' | 'progress' | 'team' | 'visit' | 'placeholder';
   headline: string;
   subheadline?: string;
   bullets?: string[];
@@ -211,26 +211,9 @@ export const pitchSlides: PitchSlide[] = [
       },
       {
         label: 'Next',
-        lines: ['5–10x capacity with a single workstation', 'Then scale by adding more workstations', '**We need your help**'],
+        lines: ['5–10x capacity with a single workstation', 'Then scale by adding more workstations'],
       },
     ],
-  },
-  {
-    id: 'ask',
-    layout: 'ask',
-    headline: 'The ask',
-    subheadline: 'Raising $2M. We have the hardware for our first workstation. We need capital for:',
-    bullets: [
-      'Materials to test and validate protocols',
-      'A second workstation and backup hardware',
-      'Time to implement the necessary software (with the help of Claude)',
-    ],
-    milestones: [
-      { month: 3, title: 'Automated workstation', description: 'One fully functioning automated workstation. All services and protocols will be developed using this workstation, with the absolute minimum human intervention.' },
-      { month: 6, title: 'Public launch', description: 'Public launch of DNA assembly services.' },
-      { month: 12, title: 'Profitability', description: 'We aim for profitability before next raise with our basic services.' },
-    ],
-    footnote: '* We\'ll continue serving customers before public launch, just more selectively. More workstations will come online as we need them.',
   },
   {
     id: 'team',
