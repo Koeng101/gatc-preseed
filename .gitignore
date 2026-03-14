@@ -2,3 +2,13 @@ node_modules/
 .DS_Store
 dist/
 synbio25.md
+.password
+
+# rant folder — only keep rant_fixed.txt, research.txt, and research_reports/
+src/data/rant/__pycache__/
+src/data/rant/*.py
+src/data/rant/*.mp3
+src/data/rant/*.wav
+src/data/rant/rant.txt
+src/data/rant/whisper.cpp/
+src/data/rant/.venv/

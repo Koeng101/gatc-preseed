@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { TabId } from '../components/TabNav'
 
-const VALID_TABS: Set<string> = new Set(['deck', 'memo', 'essay_01', 'essay_02', 'essay_03'])
+const VALID_TABS: Set<string> = new Set(['deck', 'memo', 'essay_01', 'essay_02', 'essay_03', 'secret'])
 
 function parseHash(): { tab: TabId; section: string | null } {
   const raw = window.location.hash.slice(1)

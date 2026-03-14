@@ -1,0 +1,25 @@
+======================================================================
+GENETIC ASSEMBLIES — MARKET RESEARCH SUMMARY
+Generated: 2026-03-13T23:01:57.083471
+======================================================================
+
+  [OK] 01_dna_synthesis_market_claude.txt                 — DNA Synthesis Market (Overall) (16,393 chars)
+  [OK] 01_dna_synthesis_market_openai.txt                 — DNA Synthesis Market (Overall) (17,720 chars)
+  [OK] 02_clonal_dna_market_claude.txt                    — Clonal DNA Market (up to 1,200 bp) (22,845 chars)
+  [OK] 02_clonal_dna_market_openai.txt                    — Clonal DNA Market (up to 1,200 bp) (16,873 chars)
+  [OK] 03_dna_builders_market_claude.txt                  — DNA Builders/Makers Market (DIY Assembly) (18,241 chars)
+  [OK] 03_dna_builders_market_openai.txt                  — DNA Builders/Makers Market (DIY Assembly) (19,393 chars)
+  [OK] 04_genetic_parts_market_claude.txt                 — Genetic Parts Market (iGEM, Addgene, Kits) (18,382 chars)
+  [OK] 04_genetic_parts_market_openai.txt                 — Genetic Parts Market (iGEM, Addgene, Kits) (17,291 chars)
+  [OK] 05_ecoli_krx_expression_claude.txt                 — E. coli KRX Expression Applications (21,419 chars)
+  [OK] 05_ecoli_krx_expression_openai.txt                 — E. coli KRX Expression Applications (29,518 chars)
+  [OK] 06_genscript_model_claude.txt                      — GenScript Service Model + Antibody Suite (22,410 chars)
+  [OK] 06_genscript_model_openai.txt                      — GenScript Service Model + Antibody Suite (20,366 chars)
+  [OK] 07_competitor_landscape_claude.txt                 — Competitor Landscape (Ansa, BuiltDNA, Clutch, Elegen, Twist) (18,101 chars)
+  [OK] 07_competitor_landscape_openai.txt                 — Competitor Landscape (Ansa, BuiltDNA, Clutch, Elegen, Twist) (25,763 chars)
+  [OK] 08_agilent_oligo_pools_claude.txt                  — Agilent Oligo Pool Pricing and Quality (17,467 chars)
+  [OK] 08_agilent_oligo_pools_openai.txt                  — Agilent Oligo Pool Pricing and Quality (26,901 chars)
+
+Total reports: 16
+Successful: 16
+Errors: 0

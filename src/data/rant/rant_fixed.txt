@@ -1,0 +1,99 @@
+All right, so while I clean the house, I thought I'd make a voice memo rather than just writing out the stuff because it is easier to do this. And I can kind of rant and ramble, and then we'll have an AI system actually aggregate and put all the stuff together later.
+
+So what I want to talk about is Genetic Assemblies, my company, the memo, and kind of the strategy that we're going down. And there might be long pauses here and there as I focus on doing specific things. I'm not really trying to be too specific about it.
+
+So as an introduction, Genetic Assemblies is my company that is currently wanting to build a cloud lab that doesn't suck.
+
+The thing that I'm doing now is specifically because Tahir, one of our investors, asked about the kind of long-term and medium-term strategy of the company, and I thought it would be easiest just to kind of record that and then help me write the strategy from there.
+
+So Genetic Assemblies, the goal is to make a cloud lab that doesn't suck, of course. That's like the primary directive, but the place in which things go wrong is in the middle area. And primarily I think that the problem, perennial problem of any company is really getting profitability.
+
+So to review what Genetic Assemblies is doing: we want to make a cloud lab that doesn't suck. Starting off with DNA assembly, because DNA assembly is easy and I know how to do it, and I think that we can do this profitably. The problem is it's a bit of a commodity market, which is not optimal, but I think it is workable. And so kind of like what is our strategy to success?
+
+Number one is going to be a fully automated workstation. We're targeting protocols that have a lot of labor costs. So for example, oligo synthesis with oligo pools is primarily a technical challenge. It's not actually a labor challenge because you're doing it all on these massive ancient printers and you're not really using humans or human labor to do that. And one of the reasons Twist has been able to scale so well is because they do that on chips. I mean, their chips are pretty fucking good. You can't really beat them. And they also tend to not like to do clonal DNA work.
+
+You can kind of see that because the price has never dropped for Twist in their entire time as a company. It's actually increased. So in 2016, it was $90 and now it's $125 because they added in cloning costs. Basically cloning is kind of hard. And I think that it is primarily hard because there's lots of labor that goes into it.
+
+One thing that is interesting about biology is that if you start from the first principles of biology, everything is dirt cheap. Biology grows from the fucking dirt. So there's no real excuse for your things not to be cheap other than you don't want to go through the labor of actually producing them.
+
+And so this is particularly apparent in things like enzymes in which you normally buy from NEB because you can't be fucked to go validate that the Chinese brand works and you really like the logistics of just getting it right when you need it. But for a company like us, it really starts to make sense to produce your own enzymes and such, so long as you can get the labor cost down.
+
+And so how are we getting the labor cost down? The answer is pretty simple. We use fully automated robots. And so we have Ben Ray, who is our primary roboticist, who's setting up those systems. And I make the software for the systems, so it's a pretty good synergy.
+
+So you may rightfully ask what is this about? What is the strategy? What we want as a company is we want a million dollars, one to two, but one million mostly. In order to get profitable, which costs us approximately $25,000 per month. This will pay for Ben's salary, it will pay for my salary. And then hopefully expand from there.
+
+What does it take to get there? Well, we want to target very specific niche markets as we get going. Kind of with the strategy that it is much better to own a single niche than it is to have to compete on the wide market. So we are going with one very, very specific niche to start out: clonal synthetic DNA up to 1,200 base pairs.
+
+Why are we doing this specifically? The reason we are specifically targeting that is I think that we have an edge that just makes us better than any other company for those specific types of sequences. The reason is that you can do a Golden Gate assembly directly from an oligo pool and on average be able to recover the genes of that size pretty reliably even though there is a 1 in 2,000 mutation rate from Twist. Allegedly, a similar one from Agilent, who we will eventually have to buy our pools from because Twist bitches and they mostly won't sell to us once we start directly competing with their business, which is life.
+
+So stage 1 is we clone DNA like this. We begin very simple. We do that one thing and we do it really well. We do almost nothing else. We just are really specific on that in order to make money.
+
+I believe that we will be able to get $25,000 in orders per month because of all of the AI protein companies that are coming out and we will be specifically transforming those into E. coli KRX cells such that you can do a lot of really convenient things with those. For example, if somebody is producing nanobodies, we can actually put them into a production strain and produce them for them kind of at a later time, but that is down the line.
+
+So stage 1 is all we want to do is get really good at putting DNA into these vectors. Very simple, very simple. I think profitability can be made from that, and in order to get there, I think we only need one more thing than what we have, which is two identical workstations, fully automated workstations in order to do this work. Ben and I can build those and build the factory.
+
+What do we do from there? I think the next stage is kind of a two-parter.
+
+One, I think that we start offering assembly services. What does that mean? What does that look like? When I say assembly services, I mean we can produce these 1.2 kilobase pair fragments. What can you do after that? Very simple. We assemble those 1.2 kilobase pair fragments recursively.
+
+Now, we already will be producing all the material necessary to do that. Our process is doing these high throughput minipreps using an automated system, and so we'll have minipreps as an output already. Now we can just use those minipreps in a Golden Gate reaction, simple. Our robots have capper/decappers and stuff, so we're going to have a parts library of plasmids that are ready to use in Golden Gate reactions. And so theoretically what you can do is just offer a library of genetic parts, a library of standard genetic parts.
+
+And this is kind of like -- if offering the recombination of parts is part 2, part 2a is build a standard library of genetic parts. The theory would be that we can first be producing these clonal DNA libraries of up to 1,200 base pairs and then from there we offer assembly services on top, and those can just put together the parts that you synthesize in the first step. So stage 1, 1.2 kilobase pair stuff. Stage 2, put those together. And then 2a is build standard genetic parts.
+
+So while we're synthesizing things that are up to 1,200 base pairs for different customers, our next challenge will be to put those together modularly. And we augment those orders in order to backfill the oligo pools, because we're not going to be able to fill them perfectly with customer orders. We put standard genetic parts that we think would be really useful, and eventually what this allows you to do is anyone who comes to our system can be like "hey, I have a plasmid I need for a very particular experiment" and we can just build that.
+
+We don't have to input customer DNA, we can just have the largest standardized genetic part toolkits, all for commercial use as well as academic use. And this is pretty unique -- it's a niche market that I think we can take over: the open source toolkits market for synthetic biology.
+
+Now this is a really small market, mind you, probably horrifically small for the investors, but it's something that I think we can succeed in and can be really used as marketing or to kind of show our stuff. It's going to be a place in which we are actually unique and I think having that actual unique part is well important in a company like ours.
+
+So we have stage one, we're just producing DNA for people, great. Stage two, we are putting it together in vectors so we can recombine your parts modularly. You want GFP with CMV with blah, blah, blah, blah, blah? We can do a modular DNA assembly and produce that for you, great.
+
+Stage three, what is stage three? Stage three I think is going to be protein production, and we're going to be really specific about where we are targeting our protein production.
+
+So what we are going to do is -- well, okay, to back up, our goal is to create unique services that are very niche, that we can effectively take over the market and offer a compelling service that maybe nobody else does. Maybe it's not that expensive but we can capture it. That's kind of the goal.
+
+For stage three, we are going to be cloning our plasmids into E. coli KRX cells. These are cells that have all the stuff for doing traditional DNA cloning except they have one nice part which is the T7 RNA polymerase under the rhamnose-inducible promoter. And what this basically means is that it is an expression strain and a cloning strain.
+
+Now by using this as our standardized strain, we unlock the power to just clone plasmids and then immediately say okay, let's go into expression. And so the idea here is to be able to do E. coli expression in 96-well plates, which gives you an order of magnitude more protein than you would get in the equivalent cell-free reaction with approximately not that much more time when it comes to the actual doing of the experiment.
+
+So while yes, you can be doing production of proteins in cell-free, we can do production of proteins in bacteria, send you the bacteria but also send you the purified protein. This is really cool because we essentially have no lag time in our production. We'll be cloning from a miniprep and then we'll just be taking a small part of that miniprep and we'll be storing it in the freezer of course, or the refrigerator. And once your thing is sequenced, we can immediately move on to protein expression. And so your turnaround time is only one extra day on top of the initial DNA production, which essentially makes it almost as fast as cell-free and you get way more protein out of it.
+
+And I think this could be important in some applications where they could use more protein or simply don't want to do the cell-free expression themselves because it's expensive. And we will just be able to beat the price on cell-free, not because we're doing anything clever but just because we're in cells and cells are cheap as shit.
+
+And so it is possible that we can offer a service which will give you more protein than you could get from cell-free yourself, for a cheaper price, that's easier and faster, and give you a way to scale up any interesting mutations that you find in there. And so I think that is a really compelling three-stage plan.
+
+First, we're doing a very specific type of clonal DNA and we're advertising it just to bulk users for dirt cheap. Even if we're not making that much money off of it, we don't need that much money to survive. I estimate that a single automated workstation will easily be able to produce 96 plasmids per day in a staggered format. And let's just say we only do 80/20, so hell, let's say each automated workstation can only do 72 plasmids per day and we run it for five days a week. And we'll just do a quick rounding -- that's 350 plasmids per week per automated workstation. And if the cost is about ten dollars and we sell for, let's just say, twenty dollars, that's seven thousand dollars a week. We approximately become profitable off one automated workstation -- we just gotta ship enough plasmids. And that's a relatively low number.
+
+That's assuming that our costs are ten dollars and we're selling for thirty dollars, which is one third the commercial price. If we sell at fifty dollars, that's forty dollars profit, which doubles it. We are wildly in the green. Wildly in the green in comparison to the numbers that we need for profitability.
+
+For the DNA parts, we're going to have to do research on how widely these are sold. I expect that we won't be selling that many but it's a great piece of marketing. Like, "okay, we have the first fully open source genetic toolkits for all organisms and we will actually put together DNA with it for you." So if you order something with Genetic Assemblies, for free we will put it into a customized vector for you. Or if you make an order size of a certain amount -- or like here's a standard price where it costs X amount for cloning and we clone every day. So let's say it's the thirty dollar plasmid, twice that of Plasmidsaurus sequencing, thirty dollars, and we give you three day shipping. That would be a great and unique service.
+
+There's things like BuiltDNA or Clutch, but I don't really think that they're getting this full stack approach of "we can go from synthetic DNA to DNA parts" and give you either one. So I think that's pretty cool.
+
+---
+
+Note to self: we're going to want to find the approximate economics of the following fields:
+
+1. DNA synthesis market
+2. Clonal DNA synthesis market
+3. Clonal DNA synthesis market up to 1,200 base pairs
+4. The plasmid maker market -- this includes things like people doing their own Golden Gate assemblies and sequencing with Plasmidsaurus, building their own DNA. Does not include synthesis. So we want the DNA builders market, not the synthesis market. It's not synthesis, it's just the assembly process and the sequencing process and so on and so forth.
+5. Genetic parts market -- specifically the genetic parts of iGEM genetic parts, Addgene genetic parts, these genetic part toolkits that are modular that you can use for building in certain organisms but are just sold as kits, part of this larger DNA makers market.
+
+And then we want to find the applications which have the most demand for the kind of E. coli KRX expression that we are advertising. So applications that need higher yields than cell-free, or could benefit from higher than cell-free yields, and have relatively robust expression in the E. coli host.
+
+We want to do market research on all those things.
+
+---
+
+Strategically I think these markets are important because there's something very fundamental about them. One, the cost of DNA cloning has not decreased over time by a whole lot, and neither has synthesis. We have new companies like Elegen or Twist I suppose that make these claims that they can make synthetic DNA cheaper, but they're not actually making clonal DNA cheaper. Clonal DNA has not decreased in price other than GenScript's $90 four-day service, which is really awesome but also GenScript kind of sucks in a lot of ways. It's very manual and I've had problems with them sending the wrong things, which is not good when you're trying to do synthesis.
+
+But GenScript also has antibody production services, kind of the whole suite, and I think that it would be important for us to go ahead and research those markets, research the potential markets that would be interesting for our technology, and see if it is practical that we can become profitable.
+
+Okay so back to the fundamental bits. With DNA synthesis we can produce any sequence that we need in house for doing any modification that we want on a cell line. And that's super important I think because that allows us to do more research projects. So for example, we might need polymerases, and polymerases are expensive. We might want KOD instead of Q5 for its particular abilities. And in order to make KOD, because it's a large protein, we can't just do it in one synthesis round with our own system because it's like 3,500 base pairs or something. We have to do it in multiple steps, and this is where the recombination becomes very important and the modular vectors.
+
+So we can do a multi-step genetic assembly into a cloning vector and then do the expression just like we would do the KRX expression for anything else, and produce protein that way. And in doing this we can start to prototype systems in which we're producing all of our own input materials. And this means things get very cheap over time because we kind of asymptotically approach the cost of the plastic and the media that we are using, the raw chemicals, of which we can minimize their usage.
+
+But in terms of markets, the biggest perhaps problem that we can encounter is the fact that biology is annoying. And so what we really want to do is make it really simple, make the biology very robust, or just do known things that we can sell for a cheaper price. We gotta work as a commodity provider for a while to get customers. Our edge is that our automation will be better so that we can take over these commodity markets for the time being and while they are still profitable, and then use them for more expensive services down the line.
+
+But we're not going to be able to build a cloud lab if we just make another company making a slightly better DNA synthesis tech like so many others have -- looking at you, Ansa. We need to take a different approach and I think the approach is: we just cost the least, we are the easiest to work with, we are robots, we run the same goddamn automated protocols over and over and they fucking work. I think that is important.

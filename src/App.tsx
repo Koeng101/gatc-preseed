@@ -4,6 +4,7 @@ import { useHashTab } from './hooks/useHashTab'
 import { PitchDeck } from './components/PitchDeck'
 import { MemoView } from './components/MemoView'
 import { EssayView } from './components/EssayView'
+import { SecretView } from './components/SecretView'
 import { essay01, essay02, essay03 } from './data/essay_content'
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
          {activeTab === 'essay_01' && <EssayView essay={essay01} section={section} />}
          {activeTab === 'essay_02' && <EssayView essay={essay02} section={section} />}
          {activeTab === 'essay_03' && <EssayView essay={essay03} section={section} />}
+         {activeTab === 'secret' && <SecretView section={section} />}
       </main>
     </div>
   )

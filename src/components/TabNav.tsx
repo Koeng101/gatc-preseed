@@ -1,4 +1,4 @@
-export type TabId = 'deck' | 'memo' | 'essay_01' | 'essay_02' | 'essay_03';
+export type TabId = 'deck' | 'memo' | 'essay_01' | 'essay_02' | 'essay_03' | 'secret';
 
 interface TabNavProps {
   activeTab: TabId;
@@ -12,6 +12,7 @@ const tabs: { id: TabId; label: string }[] = [
   { id: 'essay_01', label: 'ESSAY_01' },
   { id: 'essay_02', label: 'ESSAY_02' },
   { id: 'essay_03', label: 'ESSAY_03' },
+  { id: 'secret', label: 'SECRET' },
 ];
 
 export const TabNav: React.FC<TabNavProps> = ({ activeTab, onTabChange, horizontal = false }) => {
