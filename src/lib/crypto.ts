@@ -14,9 +14,10 @@ interface EncryptedBundle {
 
 const bundle = encryptedBundle as EncryptedBundle;
 
-function b64ToUint8(b64: string): Uint8Array {
+function b64ToUint8(b64: string): Uint8Array<ArrayBuffer> {
   const bin = atob(b64);
-  const arr = new Uint8Array(bin.length);
+  const buf = new ArrayBuffer(bin.length);
+  const arr = new Uint8Array(buf);
   for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
   return arr;
 }
