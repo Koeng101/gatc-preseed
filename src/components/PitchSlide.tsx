@@ -62,11 +62,9 @@ const HookSlide: React.FC<PitchSlideProps> = ({ slide }) => (
       <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-black leading-[0.95] uppercase mb-6">
         {slide.headline}
       </h1>
-      {slide.subheadline && (
-        <p className="text-lg md:text-xl font-mono text-slate-700 max-w-[600px] mx-auto">
-          {slide.subheadline}
-        </p>
-      )}
+      <p className="text-xl md:text-2xl lg:text-3xl font-bold text-slate-800 mt-6 max-w-[750px] mx-auto">
+        (somebody has to produce <span className="text-[#ff4d00]">real data</span> to validate biological AI. We do that.)
+      </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-5 mt-8">
         <GaIcon size={128} />
         <span className="font-mono font-bold text-xl md:text-3xl tracking-tight uppercase">GENETIC_ASSEMBLIES</span>
@@ -500,7 +498,7 @@ const MarketSelectionSlide: React.FC<PitchSlideProps> = ({ slide }) => (
       className="max-w-[750px] text-center font-mono text-base md:text-lg text-slate-700 leading-relaxed"
     >
       <span className="font-bold text-[#ff4d00]">Our thesis: </span>
-      With effective robots and commodity materials, so long as we optimize the process for minimal human intervention, we can win a given biotechnology service market.
+      With effective robots and commodity materials, so long as we optimize the process for minimal human intervention, we can win a given biotechnology service market through labor efficiency.
     </motion.p>
   </div>
 );
