@@ -1,0 +1,120 @@
+========
+OVERVIEW
+========
+
+Our short-medium term market strategy contains three objectives:
+
+1. Keep protocols fully automated (cheap labor)
+2. Lower fundamental costs (cheap materials)
+3. Use those cheap labor + cheap materials to dominate niche markets at the start of experimental supply chains
+
+These niche markets create brand awareness and consumer trust. From that position, we expand into adjacent but larger markets, relying on our logistics of cheap labor + material inputs to win.
+
+========
+THE PLAN
+========
+
+Specifically, the plan is:
+
+PLAN:1. Active shipment of <1200bp clonal DNA to customers // 3–6 months
+PLAN:2. Recombination of clonal DNA // 6–9 months
+PLAN:2a. Open genetic parts library
+PLAN:3. Protein production services // 6–12 months
+PLAN:3a. Low cost enzymes
+
+[1] enables us to cheaply produce the required inputs to build [2] and service [3]. [2] opens up an underserved market — DNA makers market, rather than just DNA synthesizer. [2a] has known demand (iGEM, FreeGenes, Addgene parts kits), yet zero commercial competition. [3] allows us to enter our next significant market: protein production. [3a] drops one of our largest costs, enzymes, while simultaneously allowing us to enter a large and competitive market as a uniquely positioned player.
+
+[2a] we can easily dominate. Even if the order volume is low, it is culturally significant. High capex, but profitable operationally.
+
+[3a] we can easily dominate a small niche with a few targeted enzymes. High capex, but profitable operationally.
+
+NOTE: [1] must be done first, but [2] and [3] can be executed in parallel.
+
+========
+1. <1200bp Clonal DNA
+========
+
+This is the foundation of all of Genetic Assemblies's technology (it is in the name: Genetic Assemblies!). The fundamental insight is that all biotechnology can be created downstream of DNA. Thus, if we can rapidly, cheaply, and profitably create massive quantities of different clonal DNA, we have the ability to quickly iterate on any downstream protocol, which is exactly what we do in [2] and [3].
+
+Concretely, we offer a service of <1200bp clonal DNA for $0.03/bp + $20 with about a 10-day turnaround time. This is 1/2 to 1/3 the current incumbent's price, but with a longer turnaround time, and likely a higher failure rate (20% vs 10%).
+
+The particular market this could be very attractive to is AI protein design companies: we can offer clonal DNA at the price of fragment DNA — simply a superior product in many ways, as it doesn't have mutations, can be scaled up for DNA production, or used directly in cells. This is a competitive commodity market, which we are depending on: in competitive commodity markets it is much easier to acquire customers, which can rapidly get us sufficient scale.
+
+In the long term, we are commoditizing our complement: DNA is the limiting factor for many experiments. As we force prices down of DNA, this increases demand for downstream services.
+
+COST:$50 plastic
+COST:$30 magnetic beads
+COST:$100 enzymes
+COST:$20 competent cells (homemade)
+COST:$200 flongle nanopore sequencing
+COST_TOTAL:$400 per 96 assemblies @ ~80% success rate = $5 per assembly
+
+With these economics (which are based on the actual plastics, beads, enzymes, etc. used), we can hit $5 per clonal plasmid. For comparison, Twist reports $76 COG per gene in their latest filing, which means we have a 15x improvement in their $145M revenue market of selling genes (though we do have disadvantages and have not factored in labor). This drops the internal price of DNA for Genetic Assemblies from $120 to $5 — enabling a 24x improvement in the primary bottleneck in many experiments.
+
+TECH:Ultra-low cost sequencing using PCR. We constrain what we build in this step, enabling us to barcode plasmids using PCR. This massively decreases our internal costs: Plasmidsaurus charges $15 per plasmid, we hit approximately $0.25 internally with flongles (tech has been validated multiple times). This 60x improvement is the most important place where we find margin.
+
+========
+2. Recombination of Clonal DNA
+========
+
+The next natural transition is recombining clonal DNA we create. This is a simple concept: we can create 1200bp fragments in our first service cheaply, but oftentimes customers want larger genes, or want to shuffle genes around to find different combinations which work better. This is where this service comes in.
+
+A user, for example, could be trying out different promoter + gene + terminator combos for a gene therapy. What we offer is the ability to synthesize each one of those DNA sequences separately, and then recombine them in any way you desire. It is relatively simple, and something people have paid us for multiple times in the past.
+
+While there are limited services that offer this, it is mostly done in-house. Our aim is to capture market from in-house cloners, rather than from institutions like Genscript or Twist. We know this market is alive because of the success of companies like Plasmidsaurus, which service just a single step in this pipeline.
+
+The unique advantage is that because we can synthesize internally so cheaply, we can begin pre-ordering and pre-caching parts, so that we can ship customer orders faster. Which leads into 2a:
+
+TECH:Leveraging the clonal DNA, plus reusing its cloning infrastructure.
+
+========
+2a. Genetic Parts Library
+========
+
+If two customers want the CMV promoter, we only have to synthesize it once, and then reuse it in both assembly reactions as a modular part. Genetic Assemblies can therefore find all commonly used genetic parts and components and transparently offer them to everyone.
+
+We know there is demand here: iGEM and Addgene currently distribute these part libraries to academics only. Our low-cost clonal DNA allows us to trivially recreate these libraries, and due to the unique intellectual property rights behind DNA (no copyright is allowed) — we can create the exact sequences from these libraries, while letting both academics and corporations access them. We can massively undercut Addgene while still being operationally revenue positive.
+
+This someday could enable us to have a GitHub-like interface for genetic parts. You can see parts that other people use, how they use them, then recombine them for your own use, and share them forward. The key is we want to absolutely dominate this market and leave no room for a competitor by distributing part libraries for as low cost as possible, all pointing back to Genetic Assemblies. As people transition away from doing things in a lab, they will naturally gravitate towards our part collections online. Genetic Assemblies aims to be THE place you go if you want to work with genetic parts.
+
+For example, Addgene sells a MoClo toolkit of one 96-well plate for $440. We can sell for 1/10 the price, $44, while still making an operational profit per plate (albeit small), guarantee twice as fast shipping, and zero restrictions on use, whereas Addgene bans redistribution of any DNA created with the kits and bans commercial use. This market, though small, is ripe for the taking and we could do it if we have the technology of low cost clonal DNA. Primarily, this can be leveraged as an asset which appreciates brand value and awareness, while creating network effects in the use of our genetic parts.
+
+An underappreciated aspect of genetic parts is that it allows agents to more effectively conceptualize and design complex genetic circuits, rather than just having plasmid maps or plasmid editors. We want to make these genetic parts AI-agent enabled first: if somebody asks about designing something with genetic parts, Claude and ChatGPT should pull from our libraries first.
+
+TECH:Willingness to execute. We are literally just taking parts that we already know people use and caching them, so people can quickly use them with us.
+
+========
+3. Protein Production Services
+========
+
+One advantage we have with clonal DNA is that we are creating plasmids in cells: therefore, we can simply express proteins in cells, which gives a 5–10x higher yield than the equivalent cell-free reaction with 10–30x lower reagent cost — prior to any optimization. We believe we could routinely get 5x the quantity of protein output for 1/100 the cost of a commercial kit for protein production.
+
+The problem: this is much more labor intensive, which is why people typically use cell-free. The solution: robots.
+
+We leverage the fact that we have low-cost DNA in cells already, which we can make expression-ready cells. Adding only 1 day onto customers' DNA orders, we can deliver, for only $20 more, the actual protein encoded by their synthesized genes. There is nobody offering that turnaround time — they can't, since they would need to put the synthetic DNA into cells. Our process is optimized for scale in number of unique proteins, as we don't compete with flasks or bioreactors, but against cell-free expression and small scale expression, which is necessary for modern-day large-scale AI-designed-protein schemes. It is a no-brainer for customers, and can be highly profitable for us.
+
+Antibody production dominates the gene synthesis market: some estimates put it at 60% of the total market of gene synthesis. We offer something that other providers cannot: the lowest cost with the fastest turnaround time for design -> antibody.
+
+TECH:We are reproducing/validating a cellulose-binding protein method of purification with a protease. If it works, we can lower the material cost of expression to be almost entirely the plastics of the pipette tips + labor.
+
+NOTE: Not everything will express. But remember we have the ability to simply synthesize more DNA: we can train models to figure out expression by synthesizing proteins we think customers may like, figuring out if they express, and then rapidly iterate on the sequence -> function level.
+
+========
+3a. Low Cost Enzymes
+========
+
+We use enzymes constantly within our synthesis system: it is 1/4 of the total cost of building plasmids. We can nearly eliminate that.
+
+It costs us about $0.50 for ligase per reaction right now as part of our plasmid building protocol. If we had the DNA in Pichia, for about $30 of media and $20 of cellulose/plastic, we can create approximately 10,000,000 reactions worth of ligase. This is a 100,000x decrease in operational costs, equal to 33 years of Moore's law. Even from commercial protein production suppliers, you can get 1000x decrease in per-reaction costs, before doing optimizations.
+
+The main costs are that enzymes are annoying to validate (labor cost), there is high upfront cost in producing the protocols and strains, and then you have to compete with trusted companies. Everyone loves NEB; they also make a massive amount of profit because of their trust.
+
+Because we already need to make these enzymes, we can swallow upfront costs and then push a little bit further than we need to crater the per unit cost. Afterwards, we can distribute for 1/10 to 1/50 the cost of the incumbent suppliers. The goal here is mainly to decrease internal prices, but also to let everyone know that Genetic Assemblies is working hard to decrease the cost of doing biology. We want to make it not worth for anyone to enter the low-cost biology enzyme market, and then use it as an example to show how much good we are doing for synthetic biology.
+
+Instead of traditional marketing materials, we ship actual enzymes that people use. We can do this because we don't actually need the margin from these shipments: more important is to commoditize our complements, show people we're an awesome company doing awesome work, and insidiously make labor their limiting factor, so that they come to us.
+
+========
+CONCLUSION
+========
+
+If we can make cheap clonal DNA, it allows us to get the scale necessary to dominate two markets: genetic part libraries and low-cost protein production. We slowly move up the chain from there: each price decrease in a fundamental process builds on each other. We can only do this through leveraging the labor of our machines, but if we succeed, we can provide experimentation for 1/10th the price that a scientist would have to pay for just the materials. Our bet is that they'll keep spending just as much, but will be unable to justify not doing it in our labs.

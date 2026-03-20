@@ -62,6 +62,7 @@ async function decryptFile(key: CryptoKey, file: EncryptedFile): Promise<string>
 export interface DecryptedContent {
   research: string;
   rantFixed: string;
+  strategy: string;
   reports: Record<string, string>;
 }
 
@@ -75,16 +76,17 @@ export async function decryptAll(password: string): Promise<DecryptedContent | n
 
     const research = await decryptFile(key, bundle.files['research']);
     const rantFixed = await decryptFile(key, bundle.files['rant_fixed']);
+    const strategy = await decryptFile(key, bundle.files['strategy']);
 
     const reportKeys = Object.keys(bundle.files).filter(
-      (k) => k !== 'research' && k !== 'rant_fixed',
+      (k) => k !== 'research' && k !== 'rant_fixed' && k !== 'strategy',
     );
     const reports: Record<string, string> = {};
     for (const rk of reportKeys) {
       reports[rk] = await decryptFile(key, bundle.files[rk]);
     }
 
-    return { research, rantFixed, reports };
+    return { research, rantFixed, strategy, reports };
   } catch {
     return null;
   }

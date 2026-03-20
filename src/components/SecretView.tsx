@@ -5,6 +5,10 @@ import {
   reportsByTopic,
   type ResearchSection,
 } from '../data/secret_content';
+import {
+  parseStrategy,
+  type StrategyBlock,
+} from '../data/strategy_content';
 import { decryptAll, type DecryptedContent } from '../lib/crypto';
 import { replaceSection } from '../hooks/useHashTab';
 
@@ -67,7 +71,7 @@ const PasswordGate: React.FC<{ onUnlock: (content: DecryptedContent) => void }> 
             onChange={(e) => setValue(e.target.value)}
             placeholder="PASSWORD"
             disabled={loading}
-            className={`w-full border-2 ${error ? 'border-red-500 bg-red-50' : 'border-black'} px-4 py-3 font-mono text-sm uppercase tracking-wider outline-none transition-colors disabled:opacity-50`}
+            className={`w-full border-2 ${error ? 'border-red-500 bg-red-50' : 'border-black'} px-4 py-3 font-mono text-sm tracking-wider outline-none transition-colors disabled:opacity-50`}
           />
           <button
             type="submit"
@@ -222,20 +226,207 @@ const SecretTabNav: React.FC<{ active: SecretTab; onChange: (t: SecretTab) => vo
 );
 
 /* ------------------------------------------------------------------ */
-/*  Strategy Placeholder                                               */
+/*  Strategy View                                                      */
 /* ------------------------------------------------------------------ */
 
-const StrategyView: React.FC = () => (
-  <div className="h-full flex items-center justify-center p-8">
-    <div className="text-center">
-      <div className="inline-block bg-black text-white px-3 py-1 font-mono text-xs font-bold uppercase mb-4">
-        Coming Soon
+/** Render text with colored [1], [2a], etc. references */
+const StrategyText: React.FC<{ text: string }> = ({ text }) => {
+  const parts = text.split(/(\[\d+[a-z]?\])/g);
+  return (
+    <>
+      {parts.map((part, i) => {
+        if (/^\[\d+[a-z]?\]$/.test(part)) {
+          const ref = part.slice(1, -1);
+          const isSub = /[a-z]$/.test(ref);
+          return (
+            <span key={i} className={`inline-flex items-center justify-center px-1.5 py-0 text-white text-[11px] font-bold border border-black mx-0.5 align-baseline ${isSub ? 'bg-black/80' : 'bg-[#ff4d00]'}`}>
+              {ref}
+            </span>
+          );
+        }
+        return <span key={i}>{part}</span>;
+      })}
+    </>
+  );
+};
+
+const StrategyBlockRenderer: React.FC<{ block: StrategyBlock }> = ({ block }) => {
+  switch (block.type) {
+    case 'text': {
+      // Detect numbered lists (lines starting with "1.", "2.", etc.)
+      if (/^\d+\.\s/.test(block.content.trim())) {
+        const items = block.content.trim().split('\n').filter(Boolean);
+        return (
+          <ol className="mb-4 space-y-2 list-none">
+            {items.map((item, i) => {
+              const m = item.match(/^(\d+)\.\s+(.*)/);
+              return (
+                <li key={i} className="flex gap-3 text-sm leading-relaxed text-slate-800 font-mono">
+                  <span className="shrink-0 inline-flex items-center justify-center w-6 h-6 bg-black text-white font-mono text-xs font-bold">
+                    {m ? m[1] : i + 1}
+                  </span>
+                  <span className="flex-1">{m ? m[2] : item}</span>
+                </li>
+              );
+            })}
+          </ol>
+        );
+      }
+      return (
+        <p className="text-sm leading-relaxed text-slate-800 font-mono mb-4">
+          <StrategyText text={block.content} />
+        </p>
+      );
+    }
+
+    case 'plan':
+      return (
+        <div className="mb-6 border-2 border-black bg-white" style={{ boxShadow: '4px 4px 0px 0px #1a1a1a' }}>
+          <div className="px-4 py-2 bg-[#e0e0e0] border-b-2 border-black">
+            <span className="font-mono text-xs font-bold uppercase">Execution Roadmap</span>
+          </div>
+          <div className="divide-y divide-black/10">
+            {block.items.map((item) => {
+              const isSub = /[a-z]$/.test(item.id);
+              return (
+              <div key={item.id} className={`px-4 py-3 flex items-start gap-3${isSub ? ' pl-12' : ''}`}>
+                <span className={`shrink-0 inline-flex items-center justify-center w-8 h-6 font-mono text-xs font-bold border border-black text-white ${isSub ? 'bg-black/80' : 'bg-[#ff4d00]'}`}>
+                  {item.id}
+                </span>
+                <span className="font-mono text-sm text-slate-800 flex-1">{item.text}</span>
+                {item.timeline && (
+                  <span className="shrink-0 font-mono text-[10px] text-slate-500 uppercase border border-black/20 px-2 py-0.5">
+                    {item.timeline}
+                  </span>
+                )}
+              </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+
+    case 'cost':
+      return (
+        <div className="mb-6 border-2 border-black bg-[#f8f7f4]" style={{ boxShadow: '4px 4px 0px 0px #1a1a1a' }}>
+          <div className="px-4 py-2 bg-[#e0e0e0] border-b-2 border-black">
+            <span className="font-mono text-xs font-bold uppercase">Cost Breakdown (per 96-well build)</span>
+          </div>
+          <div className="p-4">
+            <div className="space-y-1 mb-3">
+              {block.rows.map((row, i) => (
+                <div key={i} className="flex justify-between font-mono text-sm text-slate-700">
+                  <span>{row.replace(/^\$[\d.]+\s+/, '')}</span>
+                  <span className="font-bold">{row.match(/^\$[\d.]+/)?.[0]}</span>
+                </div>
+              ))}
+            </div>
+            <div className="border-t-2 border-black pt-3">
+              <p className="font-mono text-sm font-bold text-black">{block.total}</p>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'tech':
+      return (
+        <div className="mb-6 border-l-4 border-[#ff4d00] bg-[#fff5f0] p-4">
+          <div className="inline-block bg-[#ff4d00] text-white px-2 py-0.5 font-mono text-[10px] font-bold uppercase mb-2">
+            Unique Technology
+          </div>
+          <p className="text-sm leading-relaxed text-slate-800 font-mono">
+            {block.content}
+          </p>
+        </div>
+      );
+
+    case 'note':
+      return (
+        <div className="mb-6 border-2 border-black bg-[#f8f7f4] p-4">
+          <div className="inline-block bg-black text-white px-2 py-0.5 font-mono text-[10px] font-bold uppercase mb-2">
+            Note
+          </div>
+          <p className="text-sm leading-relaxed text-slate-700 font-mono">
+            <StrategyText text={block.content} />
+          </p>
+        </div>
+      );
+  }
+};
+
+const StrategyView: React.FC<{ text: string }> = ({ text }) => {
+  const sections = parseStrategy(text);
+
+  return (
+    <div className="h-full overflow-y-auto">
+      <div className="px-4 py-8 sm:px-12 sm:py-12 max-w-[800px] mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="inline-block bg-black text-white px-3 py-1 font-mono text-xs font-bold uppercase mb-6">
+            Internal Strategy
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black text-black mb-4 leading-[0.95] uppercase">
+            Genetic Assemblies
+          </h1>
+          <p className="font-mono text-xs text-slate-500 uppercase mb-8">Strategy Document // Confidential</p>
+        </motion.div>
+
+        {sections.map((sec, si) => {
+          const isSubSection = /^[0-9]+[a-z]/.test(sec.number);
+          const isNumbered = sec.number !== '';
+
+          return (
+            <div key={si} className={isSubSection ? 'mb-10 ml-4 sm:ml-8' : 'mb-12'}>
+              {isNumbered ? (
+                isSubSection ? (
+                  <motion.h3
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 + si * 0.04 }}
+                    className="text-lg font-black text-black mb-4 uppercase flex items-center gap-3"
+                  >
+                    <span className="shrink-0 inline-flex items-center justify-center px-2 py-0.5 bg-black/80 text-white text-sm font-bold border border-black">
+                      {sec.number}
+                    </span>
+                    {sec.title}
+                  </motion.h3>
+                ) : (
+                  <motion.h2
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 + si * 0.04 }}
+                    className="text-2xl font-black text-black mb-6 uppercase border-b-4 border-black pb-2 flex items-center gap-3"
+                  >
+                    <span className="shrink-0 inline-flex items-center justify-center px-2 py-0.5 bg-[#ff4d00] text-white text-base font-bold border border-black">
+                      {sec.number}
+                    </span>
+                    {sec.title}
+                  </motion.h2>
+                )
+              ) : (
+                <motion.h2
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.1 + si * 0.04 }}
+                  className="text-xl font-black text-black mb-6 uppercase"
+                >
+                  {sec.title}
+                </motion.h2>
+              )}
+
+              {sec.blocks.map((block, bi) => (
+                <StrategyBlockRenderer key={bi} block={block} />
+              ))}
+            </div>
+          );
+        })}
       </div>
-      <h2 className="text-2xl font-black uppercase mb-2">Strategy</h2>
-      <p className="font-mono text-sm text-slate-500 uppercase">This section is under construction.</p>
     </div>
-  </div>
-);
+  );
+};
 
 /* ------------------------------------------------------------------ */
 /*  Research Synthesis (Left Panel Content)                            */
@@ -407,7 +598,7 @@ const ReportsPanel: React.FC<{
 
 export const SecretView: React.FC<SecretViewProps> = ({ section }) => {
   const [content, setContent] = useState<DecryptedContent | null>(null);
-  const [secretTab, setSecretTab] = useState<SecretTab>('market_research');
+  const [secretTab, setSecretTab] = useState<SecretTab>('strategy');
   const [showRant, setShowRant] = useState(false);
   const [viewingReport, setViewingReport] = useState<{ key: string; label: string } | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
@@ -472,7 +663,7 @@ export const SecretView: React.FC<SecretViewProps> = ({ section }) => {
     <div className="h-full flex flex-col">
       <SecretTabNav active={secretTab} onChange={setSecretTab} />
 
-      {secretTab === 'strategy' && <StrategyView />}
+      {secretTab === 'strategy' && <StrategyView text={content.strategy} />}
 
       {secretTab === 'market_research' && (
         <div className="flex-1 min-h-0">

@@ -60,6 +60,7 @@ const files = {};
 // Encrypt main content
 files['research'] = encrypt(readFileSync(join(RANT_DIR, 'research.txt'), 'utf8'));
 files['rant_fixed'] = encrypt(readFileSync(join(RANT_DIR, 'rant_fixed.txt'), 'utf8'));
+files['strategy'] = encrypt(readFileSync(join(RANT_DIR, 'strategy.txt'), 'utf8'));
 
 // Encrypt all research reports (skip the summary index)
 const reportFiles = readdirSync(REPORTS_DIR)
