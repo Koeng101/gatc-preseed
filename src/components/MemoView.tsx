@@ -213,6 +213,9 @@ const MemoContent: React.FC<{
           </div>
         ));
       })()}
+      <p className="mt-12 text-base leading-relaxed font-mono text-slate-800 border-t border-slate-200 pt-4">
+        Disclaimer: there was a previous legal spat due to cofounder issues with my last startup — this has been completely settled as of &gt;9 months ago.
+      </p>
     </>
   );
 };
