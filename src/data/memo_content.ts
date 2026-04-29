@@ -136,6 +136,18 @@ export const memoSections: MemoSection[] = [
     ],
   },
   {
+    id: 'why-now',
+    title: 'Why now?',
+    subsections: [
+      {
+        paragraphs: [
+          'In the past, cloud labs like Emerald Cloud Labs and Transcriptic infamously tried and largely failed to deliver on this goal. Why will this be different? (1) The programmer-biologist Venn diagram was tiny; LLMs collapse that gap. (2) ECL and Transcriptic were logistically painful: contracts, shipping reagents and samples in and out, weeks of onboarding. (3) They raised too much too fast, which forced them to chase pharma returns and abandon the basic scientists who actually build a market.',
+          'We believe we can solve all three. (1) We aim to be agent-native, and we expect most of our customers in the future to be AI systems working on behalf of humans — we are specifically building for that. (2) Our entire go-to-market strategy is built around what makes the logistics easiest for our current and future customers. All synthetic biology sprouts from the seed of synthetic DNA, which is why we start there; the basic procedures that most scientists need, we provide as simple, reliable, cheap, batched services where we aggregate orders to reach economies of scale. (3) We have excellent capital utilization: our robots are all purchased used or broken from auction, averaging roughly 1/50 the cost of new machines. We are a small operation, and we aim to be profitable on basic services as soon as possible within this raise.',
+        ],
+      },
+    ],
+  },
+  {
     id: 'dirty-work',
     title: 'The dirty work ahead',
     subsections: [
