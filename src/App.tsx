@@ -5,6 +5,7 @@ import { PitchDeck } from './components/PitchDeck'
 import { MemoView } from './components/MemoView'
 import { EssayView } from './components/EssayView'
 import { SecretView } from './components/SecretView'
+import { CopyAllButton } from './components/CopyAllButton'
 import { essay01, essay02, essay03 } from './data/essay_content'
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
         <div className="overflow-x-auto px-2 py-2">
           <TabNav activeTab={activeTab} onTabChange={setActiveTab} horizontal />
         </div>
+        <div className="px-2 pb-2">
+          <CopyAllButton />
+        </div>
       </header>
 
       {/* Desktop Sidebar */}
@@ -33,6 +37,9 @@ function App() {
 
          <div className="p-4 flex-1">
             <TabNav activeTab={activeTab} onTabChange={setActiveTab} />
+         </div>
+         <div className="p-4 border-t-2 border-black">
+            <CopyAllButton />
          </div>
       </aside>
 

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import type { PitchSlide as PitchSlideData } from '../data/pitch_content';
 import { VisualizationPlaceholder } from './VisualizationPlaceholder';
 import { GaIcon } from './GaIcon';
+import { CopyAllButton } from './CopyAllButton';
 import plateGif from '../assets/plate0_magsep.gif';
 import problemImg from '../assets/problem.png';
 import solutionImg from '../assets/solution.png';
@@ -69,6 +70,17 @@ const HookSlide: React.FC<PitchSlideProps> = ({ slide }) => (
         <GaIcon size={128} />
         <span className="font-mono font-bold text-xl md:text-3xl tracking-tight uppercase">GENETIC_ASSEMBLIES</span>
       </div>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="mt-8 md:mt-10 flex flex-col items-center gap-2"
+      >
+        <CopyAllButton variant="prominent" />
+        <span className="text-[11px] md:text-xs font-mono text-slate-500 uppercase tracking-wider">
+          // for investors: paste the whole site into your LLM
+        </span>
+      </motion.div>
     </motion.div>
   </div>
 );
