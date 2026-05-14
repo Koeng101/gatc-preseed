@@ -19,6 +19,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const RANT_DIR = join(ROOT, 'src/data/rant');
 const REPORTS_DIR = join(RANT_DIR, 'research_reports');
+const TARGETS_DIR = join(ROOT, 'outside_docs/targets');
+const TARGETS_BRIEFS_DIR = join(TARGETS_DIR, 'briefs');
 const OUTPUT = join(ROOT, 'src/data/encrypted_secret.json');
 const PASSWORD_FILE = join(ROOT, '.password');
 
@@ -72,7 +74,61 @@ for (const file of reportFiles) {
   files[fileKey] = encrypt(readFileSync(join(REPORTS_DIR, file), 'utf8'));
 }
 
+// ---------------------------------------------------------------------
+//  Targets — customer discovery briefs
+// ---------------------------------------------------------------------
+
+/** Minimal RFC4180 CSV parser: handles quoted fields with embedded quotes/commas/newlines. */
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
+  let field = '';
+  let inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i++; }
+        else { inQuotes = false; }
+      } else {
+        field += c;
+      }
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+      else if (c === '\r') { /* skip */ }
+      else field += c;
+    }
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+const csvText = readFileSync(join(TARGETS_DIR, 'targets.csv'), 'utf8');
+const csvRows = parseCSV(csvText).filter(r => r.length > 1);
+const csvHeader = csvRows[0];
+const targetsRows = csvRows.slice(1).map(cells => {
+  const obj = {};
+  csvHeader.forEach((h, i) => { obj[h] = cells[i] ?? ''; });
+  return obj;
+});
+
+const briefFiles = readdirSync(TARGETS_BRIEFS_DIR)
+  .filter(f => f.endsWith('.md'))
+  .sort();
+const briefMap = {};
+for (const file of briefFiles) {
+  const slug = file.replace('.md', '');
+  briefMap[slug] = readFileSync(join(TARGETS_BRIEFS_DIR, file), 'utf8');
+}
+
+files['targets_methodology'] = encrypt(readFileSync(join(TARGETS_DIR, 'methodology.md'), 'utf8'));
+files['targets_index'] = encrypt(JSON.stringify({ rows: targetsRows }));
+files['targets_briefs'] = encrypt(JSON.stringify(briefMap));
+
 const output = { salt: salt.toString('base64'), iterations: ITERATIONS, files };
 
 writeFileSync(OUTPUT, JSON.stringify(output));
 console.log(`Encrypted ${Object.keys(files).length} files -> src/data/encrypted_secret.json`);
+console.log(`  · ${targetsRows.length} target prospects, ${briefFiles.length} briefs`);

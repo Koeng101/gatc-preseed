@@ -11,8 +11,9 @@ import {
 } from '../data/strategy_content';
 import { decryptAll, type DecryptedContent } from '../lib/crypto';
 import { replaceSection } from '../hooks/useHashTab';
+import { TargetsView } from './TargetsView';
 
-type SecretTab = 'strategy' | 'market_research';
+type SecretTab = 'strategy' | 'targets' | 'market_research';
 
 interface SecretViewProps {
   section?: string | null;
@@ -202,6 +203,7 @@ const ReportModal: React.FC<{ content: string; label: string; reportKey: string;
 
 const SECRET_TABS: { id: SecretTab; label: string }[] = [
   { id: 'strategy', label: 'STRATEGY' },
+  { id: 'targets', label: 'TARGETS' },
   { id: 'market_research', label: 'MARKET_RESEARCH' },
 ];
 
@@ -664,6 +666,14 @@ export const SecretView: React.FC<SecretViewProps> = ({ section }) => {
       <SecretTabNav active={secretTab} onChange={setSecretTab} />
 
       {secretTab === 'strategy' && <StrategyView text={content.strategy} />}
+
+      {secretTab === 'targets' && (
+        <TargetsView
+          methodology={content.targetsMethodology}
+          rows={content.targetsRows}
+          briefs={content.targetsBriefs}
+        />
+      )}
 
       {secretTab === 'market_research' && (
         <div className="flex-1 min-h-0">
