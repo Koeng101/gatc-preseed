@@ -227,7 +227,7 @@ export const pitchSlides: PitchSlide[] = [
       },
       {
         name: 'Ben Ray',
-        role: 'Founding Engineer',
+        role: 'Cofounder',
         bio: 'Led the automation team at Retro Biosciences for 3.5 years. Built and maintained hardware for fully automated robotic systems using used robots and clever engineering.',
       },
     ],
